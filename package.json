@@ -1,22 +1,26 @@
 {
-  "name": "webapp",
+  "name": "trivia-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LoganTyl/WebSecurityApp.git"
+    "build": "webpack",
+    "serve": "webpack serve",
+    "start": "npm run serve"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LoganTyl/WebSecurityApp/issues"
-  },
-  "homepage": "https://github.com/LoganTyl/WebSecurityApp#readme",
-  "dependencies": {
-    "bcryptjs": "^2.4.3"
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.2.0",
+    "sass": "^1.36.0",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.47.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }
