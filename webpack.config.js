@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   function(_env, argv){
@@ -13,7 +13,8 @@ module.exports = {
 
       return {
         devtool: isDevelopment && "cheap-module-source-map",
-        entry: "./src/index.js",
+        entry: "./src/index.tsx",
+        // entry: "./src/index.js",
         output: {
           path: path.resolve(__dirname, "dist"),
           filename: "assets/js/[name].[contenthash:8].js",
@@ -40,9 +41,23 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
+            isProduction ? MiniCssExtractPlugin.loader : "style-loader",
+            {
+                loader: "css-loader",
+                options: {
+                    importLoaders: 2
+                }
+            },
+            'resolve-url-loader',
+            {
+                loader: "sass-loader",
+                options: {
+                    sourceMap: true
+                }
+            }
+        //   "style-loader",
+        //   "css-loader",
+        //   "sass-loader"
         ]
       },
       {
@@ -53,7 +68,20 @@ module.exports = {
           ]
       },
       {
-        "test": /\.jsx?$/,
+          test: /\.module.css$/,
+          use: [
+              isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+              {
+                  loader: 'css-loader',
+                  options: {
+                      modules: true
+                  }
+              }
+          ]
+      },
+      {
+        'test': /\.(js|jsx|ts|tsx)$/,
+        // "test": /\.jsx?$/,
         "exclude": /node_modules/,
         "use": {
           "loader": "babel-loader",
@@ -91,7 +119,7 @@ module.exports = {
     ]
   },
   resolve: {
-      extensions: [".js", ".jsx"]
+      extensions: [".js", ".jsx", '.ts', '.tsx']
   },
   plugins: [
       isProduction && new MiniCssExtractPlugin({
@@ -106,6 +134,9 @@ module.exports = {
       new HtmlWebpackPlugin({
           template: path.resolve(__dirname, "public/index.html"),
           inject: true
+      }),
+      new ForkTsCheckerWebpackPlugin({
+          async: false
       })
   ].filter(Boolean),
   optimization: {
