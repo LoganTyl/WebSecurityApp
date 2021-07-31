@@ -129,7 +129,7 @@ module.exports = function(_env, argv){
                 )
             }),
             new HtmlWebpackPlugin({
-                template: path.resolve(__dirname, "src/pages/index.html"),
+                template: path.resolve(__dirname, "src/pages/signIn.html"),
                 inject: true
             }),
             new ForkTsCheckerWebpackPlugin({
