@@ -7,6 +7,117 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <a href="home.html">Back</a>
+        <h1>Edit Account</h1>
+
+        <!--TODO: Fill inputs with user's values-->
+
+        <div class="editFields">
+            <label for="fNameEdit">First Name:</label>
+            <input type="text" class="nameInput" id="fNameEdit" placeholder="John" minlength="2">
+            <span class="errorMessage" hidden>Invalid name!</span>
+
+            <label for="lNameEdit">Last Name:</label>
+            <input type="text" class="nameInput" id="lNameEdit" placeholder="Doe" minlength="2">
+            <span class="errorMessage" hidden>Invalid name!</span>
+
+            <label for="addressEdit">Address:</label>
+            <input type="text" class="addressInput" id="addressEdit" placeholder="111 Faux Street">
+            <span class="errorMessage" hidden>Invalid address!</span>
+
+            <label for="cityEdit">City:</label>
+            <input type="text" class="cityEdit" id="cityEdit" placeholder="Salt Lake City">
+            <span class="errorMessage" hidden>Invalid city!</span>
+
+            <label for="stateEdit">State:</label>
+            <select name="stateSelect" id="stateEdit">
+                <option value="AL">AL</option>
+                <option value="AK">AK</option>
+                <option value="AR">AR</option>	
+                <option value="AZ">AZ</option>
+                <option value="CA">CA</option>
+                <option value="CO">CO</option>
+                <option value="CT">CT</option>
+                <option value="DC">DC</option>
+                <option value="DE">DE</option>
+                <option value="FL">FL</option>
+                <option value="GA">GA</option>
+                <option value="HI">HI</option>
+                <option value="IA">IA</option>	
+                <option value="ID">ID</option>
+                <option value="IL">IL</option>
+                <option value="IN">IN</option>
+                <option value="KS">KS</option>
+                <option value="KY">KY</option>
+                <option value="LA">LA</option>
+                <option value="MA">MA</option>
+                <option value="MD">MD</option>
+                <option value="ME">ME</option>
+                <option value="MI">MI</option>
+                <option value="MN">MN</option>
+                <option value="MO">MO</option>	
+                <option value="MS">MS</option>
+                <option value="MT">MT</option>
+                <option value="NC">NC</option>	
+                <option value="NE">NE</option>
+                <option value="NH">NH</option>
+                <option value="NJ">NJ</option>
+                <option value="NM">NM</option>			
+                <option value="NV">NV</option>
+                <option value="NY">NY</option>
+                <option value="ND">ND</option>
+                <option value="OH">OH</option>
+                <option value="OK">OK</option>
+                <option value="OR">OR</option>
+                <option value="PA">PA</option>
+                <option value="RI">RI</option>
+                <option value="SC">SC</option>
+                <option value="SD">SD</option>
+                <option value="TN">TN</option>
+                <option value="TX">TX</option>
+                <option value="UT">UT</option>
+                <option value="VT">VT</option>
+                <option value="VA">VA</option>
+                <option value="WA">WA</option>
+                <option value="WI">WI</option>	
+                <option value="WV">WV</option>
+                <option value="WY">WY</option>
+            </select>
+
+            <label for="zipEdit">Zip Code:</label>
+            <input type="number" class="zipEdit" id="zipEdit" placeholder="12345" maxlength="5">
+            <span class="errorMessage" hidden>Invalid zip code!</span>
+
+            <label for="emailEdit">Email:</label>
+            <input type="email" class="emailInput" id="emailEdit" placeholder="johndoe@gmail.com">
+            <span class="errorMessage" hidden>Invalid email!</span>
+            
+            <label for="passwordEdit">Password:</label>
+            <input type="text" class="addressInput" id="addressEdit" minlength="8">
+            <span class="errorMessage" hidden>Invalid password!</span>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="text" class="confirmPasswordInput" id="confirmPassword" minlength="8">
+            <span class="errorMessage" hidden>Passwords do not match!</span>
+
+            <label for="phoneNumberEdit">Phone:</label>
+            <input type="tel" class="phoneNumberInput" id="phoneNumberEdit" placeholder="111-222-3333">
+            <span class="errorMessage" hidden>Invalid phone number!</span>
+            
+            <button type="submit" class="EditBtn">Sign Up</button>
+        </div>
+    </div>
+</body>
+</html>
 </body>
 </html>
