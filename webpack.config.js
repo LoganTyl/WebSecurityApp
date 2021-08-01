@@ -12,8 +12,9 @@ module.exports = function(_env, argv){
 
     return {
         devtool: isDevelopment && "cheap-module-source-map",
-        entry: "./src/index.tsx",
+        // entry: "./src/index.tsx",
         // entry: "./src/index.js",
+        entry: path.join(__dirname, "src", "index.js"),
         output: {
             path: path.resolve(__dirname, "dist"),
             filename: "assets/js/[name].[contenthash:8].js",
@@ -128,10 +129,10 @@ module.exports = function(_env, argv){
                     isProduction ? "production" : "development"
                 )
             }),
-            new HtmlWebpackPlugin({
-                template: path.resolve(__dirname, "src/pages/signIn.html"),
-                inject: true
-            }),
+            // new HtmlWebpackPlugin({
+            //     template: path.resolve(__dirname, "src/pages/index.html"),
+            //     inject: true
+            // }),
             new ForkTsCheckerWebpackPlugin({
                 async: false
             })
