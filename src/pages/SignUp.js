@@ -15,23 +15,23 @@ const SignUp = () => {
                 <Link to="/signIn">Back</Link>
                 <h1>Sign Up</h1>
                 <div className="signUpFields">
-                    <label for="fNameSignUp">First Name:</label>
-                    <input type="text" className="nameInput" id="fNameSignUp" placeholder="John" minlength="2"/>
+                    <label htmlFor="fNameSignUp">First Name:</label>
+                    <input type="text" className="nameInput" id="fNameSignUp" placeholder="John" minLength="2"/>
                     <span className="errorMessage" hidden>Invalid name!</span>
 
-                    <label for="lNameSignUp">Last Name:</label>
-                    <input type="text" className="nameInput" id="lNameSignUp" placeholder="Doe" minlength="2"/>
+                    <label htmlFor="lNameSignUp">Last Name:</label>
+                    <input type="text" className="nameInput" id="lNameSignUp" placeholder="Doe" minLength="2"/>
                     <span className="errorMessage" hidden>Invalid name!</span>
 
-                    <label for="addressSignUp">Address:</label>
+                    <label htmlFor="addressSignUp">Address:</label>
                     <input type="text" className="addressInput" id="addressSignUp" placeholder="111 Faux Street"/>
                     <span className="errorMessage" hidden>Invalid address!</span>
 
-                    <label for="citySignUp">City:</label>
+                    <label htmlFor="citySignUp">City:</label>
                     <input type="text" className="citySignUp" id="citySignUp" placeholder="Salt Lake City"/>
                     <span className="errorMessage" hidden>Invalid city!</span>
 
-                    <label for="stateSignUp">State:</label>
+                    <label htmlFor="stateSignUp">State:</label>
                     <select name="stateSelect" id="stateSignUp">
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
@@ -86,23 +86,23 @@ const SignUp = () => {
                         <option value="WY">WY</option>
                     </select>
 
-                    <label for="zipSignUp">Zip Code:</label>
+                    <label htmlFor="zipSignUp">Zip Code:</label>
                     <input type="number" className="zipSignUp" id="zipSignUp" placeholder="12345" maxlength="5"/>
                     <span className="errorMessage" hidden>Invalid zip code!</span>
 
-                    <label for="emailSignUp">Email:</label>
+                    <label htmlFor="emailSignUp">Email:</label>
                     <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com"/>
                     <span className="errorMessage" hidden>Invalid email!</span>
                     
-                    <label for="passwordSignUp">Password:</label>
-                    <input type="text" className="addressInput" id="addressSignUp" minlength="8"/>
+                    <label htmlFor="passwordSignUp">Password:</label>
+                    <input type="text" className="addressInput" id="addressSignUp" minLength="8"/>
                     <span className="errorMessage" hidden>Invalid password!</span>
 
-                    <label for="confirmPassword">Confirm Password:</label>
-                    <input type="text" className="confirmPasswordInput" id="confirmPassword" minlength="8"/>
+                    <label htmlFor="confirmPassword">Confirm Password:</label>
+                    <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="8"/>
                     <span className="errorMessage" hidden>Passwords do not match!</span>
 
-                    <label for="phoneNumberSignUp">Phone:</label>
+                    <label htmlFor="phoneNumberSignUp">Phone:</label>
                     <input type="tel" className="phoneNumberInput" id="phoneNumberSignUp" placeholder="111-222-3333"/>
                     <span className="errorMessage" hidden>Invalid phone number!</span>
                     

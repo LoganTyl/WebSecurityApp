@@ -16,10 +16,10 @@ const SignIn = () => {
                 <div className="signInFields">
                     <p className="invalidSignIn" hidden>Invalid email and/or password!</p>
 
-                    <label for="emailSignIn">Email:</label>
+                    <label htmlFor="emailSignIn">Email:</label>
                     <input type="email" className="emailInput" id="emailSignIn"/>
 
-                    <label for="passwordSignIn">Password:</label>
+                    <label htmlFor="passwordSignIn">Password:</label>
                     <input type="password" className="passwordInput" id="passwordSignIn"/>
 
                     {/* TODO: Get button to redirect to /home */}

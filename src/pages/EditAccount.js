@@ -18,23 +18,23 @@ const EditAccount = () => {
                 {/* <!--TODO: Fill inputs with user's values--> */}
 
                 <div className="editFields">
-                    <label for="fNameEdit">First Name:</label>
-                    <input type="text" className="nameInput" id="fNameEdit" placeholder="John" minlength="2"/>
+                    <label htmlFor="fNameEdit">First Name:</label>
+                    <input type="text" className="nameInput" id="fNameEdit" placeholder="John" minLength="2"/>
                     <span className="errorMessage" hidden>Invalid name!</span>
 
-                    <label for="lNameEdit">Last Name:</label>
-                    <input type="text" className="nameInput" id="lNameEdit" placeholder="Doe" minlength="2"/>
+                    <label htmlFor="lNameEdit">Last Name:</label>
+                    <input type="text" className="nameInput" id="lNameEdit" placeholder="Doe" minLength="2"/>
                     <span className="errorMessage" hidden>Invalid name!</span>
 
-                    <label for="addressEdit">Address:</label>
+                    <label htmlFor="addressEdit">Address:</label>
                     <input type="text" className="addressInput" id="addressEdit" placeholder="111 Faux Street"/>
                     <span className="errorMessage" hidden>Invalid address!</span>
 
-                    <label for="cityEdit">City:</label>
+                    <label htmlFor="cityEdit">City:</label>
                     <input type="text" className="cityEdit" id="cityEdit" placeholder="Salt Lake City"/>
                     <span className="errorMessage" hidden>Invalid city!</span>
 
-                    <label for="stateEdit">State:</label>
+                    <label htmlFor="stateEdit">State:</label>
                     <select name="stateSelect" id="stateEdit">
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
@@ -89,23 +89,23 @@ const EditAccount = () => {
                         <option value="WY">WY</option>
                     </select>
 
-                    <label for="zipEdit">Zip Code:</label>
+                    <label htmlFor="zipEdit">Zip Code:</label>
                     <input type="number" className="zipEdit" id="zipEdit" placeholder="12345" maxlength="5"/>
                     <span className="errorMessage" hidden>Invalid zip code!</span>
 
-                    <label for="emailEdit">Email:</label>
+                    <label htmlFor="emailEdit">Email:</label>
                     <input type="email" className="emailInput" id="emailEdit" placeholder="johndoe@gmail.com"/>
                     <span className="errorMessage" hidden>Invalid email!</span>
                     
-                    <label for="passwordEdit">Password:</label>
-                    <input type="text" className="addressInput" id="addressEdit" minlength="8"/>
+                    <label htmlFor="passwordEdit">Password:</label>
+                    <input type="text" className="addressInput" id="addressEdit" minLength="8"/>
                     <span className="errorMessage" hidden>Invalid password!</span>
 
-                    <label for="confirmPassword">Confirm Password:</label>
-                    <input type="text" className="confirmPasswordInput" id="confirmPassword" minlength="8"/>
+                    <label htmlFor="confirmPassword">Confirm Password:</label>
+                    <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="8"/>
                     <span className="errorMessage" hidden>Passwords do not match!</span>
 
-                    <label for="phoneNumberEdit">Phone:</label>
+                    <label htmlFor="phoneNumberEdit">Phone:</label>
                     <input type="tel" className="phoneNumberInput" id="phoneNumberEdit" placeholder="111-222-3333"/>
                     <span className="errorMessage" hidden>Invalid phone number!</span>
                     

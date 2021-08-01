@@ -26,7 +26,7 @@ const Home = () => {
 
                 <div className="submitTriviaQuestions">
                     <form>
-                        <label for="category">Question Category:</label>
+                        <label htmlFor="category">Question Category:</label>
                         <select name="questionCategory" id="category">
                             <option value="9">General Knowledge</option>
                             <option value="10">Entertainment: Books</option>
@@ -54,10 +54,10 @@ const Home = () => {
                             <option value="32">Entertainment: Cartoon & Animations</option>
                         </select>
 
-                        <label for="question">Question</label>
+                        <label htmlFor="question">Question</label>
                         <input type="text" id="question" placeholder="Mickey Mouse is owned by Disney"/>
 
-                        <label for="trueOrFalse">Select the correct answer:</label>
+                        <label htmlFor="trueOrFalse">Select the correct answer:</label>
                         <input type="radio" id="trueOrFalse" value="true"/>
                         <span>True</span>
                         <input type="radio" id="trueOrFalse" value="false"/>
