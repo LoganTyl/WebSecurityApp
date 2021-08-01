@@ -1,43 +1,31 @@
 import '../styles/style.scss';
 
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import SignUp from './SignUp';
-import Home from './Home';
 
-const SignIn = () => {
-    console.log('in react')
-
-    return (
-        <Router>
-            <div className="container">
-                <h1>Sign In</h1>
-                <div className="signInFields">
-                    <p className="invalidSignIn" hidden>Invalid email and/or password!</p>
-
-                    <label htmlFor="emailSignIn">Email:</label>
-                    <input type="email" className="emailInput" id="emailSignIn"/>
-
-                    <label htmlFor="passwordSignIn">Password:</label>
-                    <input type="password" className="passwordInput" id="passwordSignIn"/>
-
-                    {/* TODO: Get button to redirect to /home */}
-                    <button type="submit" className="signInBtn">Sign In</button>
+class SignIn extends Component {
+    render(){
+        return (
+            <>
+                <div className="container">
+                    <h1>Sign In</h1>
+                    <div className="signInFields">
+                        <p className="invalidSignIn" hidden>Invalid email and/or password!</p>
+    
+                        <label htmlFor="emailSignIn">Email:</label>
+                        <input type="email" className="emailInput" id="emailSignIn"/>
+    
+                        <label htmlFor="passwordSignIn">Password:</label>
+                        <input type="password" className="passwordInput" id="passwordSignIn"/>
+    
+                        {/* TODO: Get button to redirect to /home */}
+                        <button type="submit" className="signInBtn" onClick={()=>window.location.href="/home"}>Sign In</button>
+                    </div>
+                    <a href="/signUp">Create an Account</a>
                 </div>
-                <Link to="/signUp">Create An Account</Link>
-                <Switch>
-                    <Route path="/signUp">
-                        <SignUp/>
-                    </Route>
-                    {/* TODO: Add authentication so user cannot go straight to home */}
-                    <Route path="/home">
-                        <Home/>    
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
-    )
+            </>
+        )
+    }
 }
 
 export default SignIn;
