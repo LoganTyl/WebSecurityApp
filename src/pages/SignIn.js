@@ -4,6 +4,18 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
 class SignIn extends Component {
+    signUserIn() {
+        fetch('https://5s65q9qmwk.execute-api.us-west-1.amazonaws.com/api/user/validate', {
+            method: "POST",
+            body: {
+                "email": "",
+                "password": ""
+            }
+        })
+        .then(data => console.log(data))
+        // window.location.href="/home"
+    }
+
     render(){
         return (
             <>
@@ -19,7 +31,7 @@ class SignIn extends Component {
                         <input type="password" className="passwordInput" id="passwordSignIn"/>
     
                         {/* TODO: Get button to redirect to /home */}
-                        <button type="submit" className="signInBtn" onClick={()=>window.location.href="/home"}>Sign In</button>
+                        <button type="submit" className="signInBtn" onClick={this.signUserIn()}>Sign In</button>
                     </div>
                     <a href="/signUp">Create an Account</a>
                 </div>

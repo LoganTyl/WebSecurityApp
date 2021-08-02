@@ -2,6 +2,7 @@ import '../styles/style.scss';
 
 import React, {Component} from 'react';
 import ReactDOM, { render } from 'react-dom';
+import { response } from 'express';
 
 class SignUp extends Component {
     state = {
@@ -99,9 +100,25 @@ class SignUp extends Component {
     }
 
     signUpUser(){
-
+        fetch('https://5s65q9qmwk.execute-api.us-west-1.amazonaws.com/api/user/create',{
+            method: "POST",
+            body: {
+                "email": "",
+                "password": "",
+                "fname": "",
+                "lname": "",
+                "phone": "",
+                "street": "",
+                "city": "",
+                "state": "",
+                "zip_code": ""
+            }
+        })
+        .then(data => console.log(data))
+        // window.location.href = "/signIn";
     }
-
+//validate takes email and password
+//update is same as create but only email and password are required
     render(){
         return (
             <>

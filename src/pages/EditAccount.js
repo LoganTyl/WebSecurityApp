@@ -86,7 +86,21 @@ class EditAccount extends Component {
     }
 
     editUser(){
-
+        fetch('https://5s65q9qmwk.execute-api.us-west-1.amazonaws.com/api/user/update', {
+            method: "PUT",
+            body: {
+                "email": "",
+                "password": "",
+                "fname": "",
+                "lname": "",
+                "phone": "",
+                "street": "",
+                "city": "",
+                "state": "",
+                "zip_code": ""
+            }
+        })
+        .then(data => console.log(data))
     }
 
     componentDidMount() {
@@ -175,6 +189,9 @@ class EditAccount extends Component {
                             <label htmlFor="zipEdit">Zip Code:</label>
                             <input type="number" className="zipEdit" id="zipEdit" placeholder="12345" maxlength="5" value={this.state.zipcode} onChange={this.checkZip()}/>
                             {/* <span className="errorMessage">Invalid zip code!</span> */}
+
+                            <label htmlFor="emailSignUp">Email:</label>
+                            <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com" value={this.state.email} onChange={this.checkEmail()} disabled/>
                             
                             <label htmlFor="passwordEdit">Password:</label>
                             <input type="text" className="addressInput" id="addressEdit" minLength="10" value={this.state.password} onChange={this.checkPassword()}/>

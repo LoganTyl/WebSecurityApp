@@ -15,6 +15,10 @@ class Home extends Component {
         // Insert db check to see if user is logged in; Set isSignedIn to true if so
     }
 
+    submitQuestion() {
+
+    }
+
     render(){
         if(this.state.isSignedIn){
             return (
@@ -69,7 +73,7 @@ class Home extends Component {
                                 <input type="radio" id="trueOrFalse" value="false"/>
                                 <span>False</span>
         
-                                <button type="submit">Submit Question</button>
+                                <button type="submit" onClick={this.submitQuestion()}>Submit Question</button>
                             </form>
                         </div>
                         
@@ -97,7 +101,6 @@ class Home extends Component {
                                                 )
                                             })
                                         }
-                                        {/* <!--Table rows inserted here with button to approve or deny them--> */}
                                     </tbody>
                                 </table>
                             </div> : null
