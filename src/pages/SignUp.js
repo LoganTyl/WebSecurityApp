@@ -4,6 +4,104 @@ import React, {Component} from 'react';
 import ReactDOM, { render } from 'react-dom';
 
 class SignUp extends Component {
+    state = {
+        fname: '',
+        lname: '',
+        street: '',
+        city: '',
+        us_State: '',
+        zipcode: '',
+        email: '',
+        isEmailValid: false,
+        password: '',
+        confirmPassword: '',
+        phone: '',
+        isSamePassword: true
+    }
+
+    checkFName(event){
+        this.setState({
+            fname: event.target.value
+        })
+    }
+
+    checkLName(event){
+        this.setState({
+            lname: event.target.value
+        })
+    }
+
+    checkStreet(event){
+        this.setState({
+            street: event.target.value
+        })
+    }
+
+    checkCity(event){
+        this.setState({
+            city: event.target.value
+        })
+    }
+
+    checkState(event) {
+        this.setState({
+            us_State: event.target.value
+        })
+    };
+
+    checkZip(event){
+        this.setState({
+            zipcode: event.target.value
+        })
+    }
+
+    checkEmail(event){
+        let email_validator_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if(email_validator_regex.test(event.target.value)){
+            this.setState({
+                email: event.target.value,
+                isEmailValid: true
+            })
+        }
+        else{
+            this.setState({
+                isEmailValid: false
+            })
+        }
+    }
+
+    checkPassword(event){
+        this.setState({
+            password: event.target.value
+        })
+    }
+
+    checkIfSamePassword(event){
+        this.setState({
+            confirmPassword: event.target.value
+        });
+        if(this.state.password === this.state.confirmPassword){
+            this.setState({
+                isSamePassword: true
+            })
+        }
+        else{
+            this.setState({
+                isSamePassword: false
+            })
+        }
+    }
+
+    checkPhone(event){
+        this.setState({
+            phone: event.target.value
+        })
+    }
+
+    signUpUser(){
+
+    }
+
     render(){
         return (
             <>
@@ -12,23 +110,23 @@ class SignUp extends Component {
                     <h1>Sign Up</h1>
                     <div className="signUpFields">
                         <label htmlFor="fNameSignUp">First Name:</label>
-                        <input type="text" className="nameInput" id="fNameSignUp" placeholder="John" minLength="2"/>
-                        <span className="errorMessage" hidden>Invalid name!</span>
+                        <input type="text" className="nameInput" id="fNameSignUp" placeholder="John" minLength="2" value={this.state.fname} onChange={this.checkFName()}/>
+                        {/* <span className="errorMessage" hidden>Invalid name!</span> */}
     
                         <label htmlFor="lNameSignUp">Last Name:</label>
-                        <input type="text" className="nameInput" id="lNameSignUp" placeholder="Doe" minLength="2"/>
-                        <span className="errorMessage" hidden>Invalid name!</span>
+                        <input type="text" className="nameInput" id="lNameSignUp" placeholder="Doe" minLength="2" value={this.state.lname} onChange={this.checkLName()}/>
+                        {/* <span className="errorMessage" hidden>Invalid name!</span> */}
     
                         <label htmlFor="addressSignUp">Address:</label>
-                        <input type="text" className="addressInput" id="addressSignUp" placeholder="111 Faux Street"/>
-                        <span className="errorMessage" hidden>Invalid address!</span>
+                        <input type="text" className="addressInput" id="addressSignUp" placeholder="111 Faux Street" value={this.state.street} onChange={this.checkStreet()}/>
+                        {/* <span className="errorMessage" hidden>Invalid address!</span> */}
     
                         <label htmlFor="citySignUp">City:</label>
-                        <input type="text" className="citySignUp" id="citySignUp" placeholder="Salt Lake City"/>
-                        <span className="errorMessage" hidden>Invalid city!</span>
+                        <input type="text" className="citySignUp" id="citySignUp" placeholder="Salt Lake City" value={this.state.city} onChange={this.checkCity}/>
+                        {/* <span className="errorMessage" hidden>Invalid city!</span> */}
     
                         <label htmlFor="stateSignUp">State:</label>
-                        <select name="stateSelect" id="stateSignUp">
+                        <select name="stateSelect" id="stateSignUp" value={this.state.us_State} onChange={this.checkState()}>
                             <option value="AL">AL</option>
                             <option value="AK">AK</option>
                             <option value="AR">AR</option>	
@@ -83,27 +181,36 @@ class SignUp extends Component {
                         </select>
     
                         <label htmlFor="zipSignUp">Zip Code:</label>
-                        <input type="number" className="zipSignUp" id="zipSignUp" placeholder="12345" maxlength="5"/>
-                        <span className="errorMessage" hidden>Invalid zip code!</span>
+                        <input type="number" className="zipSignUp" id="zipSignUp" placeholder="12345" maxlength="5" value={this.state.zipcode} onChange={this.checkZip()}/>
+                        {/* <span className="errorMessage">Invalid zip code!</span> */}
     
                         <label htmlFor="emailSignUp">Email:</label>
-                        <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com"/>
-                        <span className="errorMessage" hidden>Invalid email!</span>
+                        <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com" value={this.state.email} onChange={this.checkEmail()}/>
+                        {
+                            isEmailValid ?
+                            <span className="errorMessage">Invalid email!</span> :
+                            null
+                        }
+
                         
                         <label htmlFor="passwordSignUp">Password:</label>
-                        <input type="text" className="addressInput" id="addressSignUp" minLength="10"/>
-                        <span className="errorMessage" hidden>Invalid password!</span>
+                        <input type="text" className="addressInput" id="addressSignUp" minLength="10" value={this.state.password} onChange={this.checkPassword()}/>
+                        {/* <span className="errorMessage" hidden>Invalid password!</span> */}
     
                         <label htmlFor="confirmPassword">Confirm Password:</label>
-                        <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="10"/>
-                        <span className="errorMessage" hidden>Passwords do not match!</span>
+                        <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="10" value={this.state.confirmPassword} onChange={this.checkIfSamePassword()}/>
+                        {
+                            this.isSamePassword ?
+                            null :
+                            <span className="errorMessage">Passwords do not match!</span>
+                        }
     
                         <label htmlFor="phoneNumberSignUp">Phone:</label>
-                        <input type="tel" className="phoneNumberInput" id="phoneNumberSignUp" placeholder="111-222-3333"/>
-                        <span className="errorMessage" hidden>Invalid phone number!</span>
+                        <input type="tel" className="phoneNumberInput" id="phoneNumberSignUp" placeholder="111-222-3333" value={this.state.phone} onChange={this.checkPhone()}/>
+                        {/* <span className="errorMessage" hidden>Invalid phone number!</span> */}
                         
                         {/* TODO: Get button to redirect to /signIn */}
-                        <button type="submit" className="signUpBtn">Sign Up</button>
+                        <button type="submit" className="signUpBtn" onClick={() => signUpUser()}>Sign Up</button>
                     </div>
                 </div>
             </>
