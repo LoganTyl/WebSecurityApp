@@ -84,7 +84,7 @@ class EditAccount extends Component {
     }
 
     editUser(){
-        
+
     }
 
     render(){
@@ -186,7 +186,7 @@ class EditAccount extends Component {
                         {/* <span className="errorMessage" hidden>Invalid phone number!</span> */}
                         
                         {/* TODO: Get button to redirect to /signIn */}
-                        <button type="submit" className="EditBtn" onClick={() => editUser()}>Sign Up</button>
+                        <button type="submit" className="EditBtn" onClick={() => editUser()}>Save User</button>
                     </div>
                 </div>
             </>

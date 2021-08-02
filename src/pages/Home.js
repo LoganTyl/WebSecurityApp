@@ -4,6 +4,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 class Home extends Component {
+    state = {
+        isAdmin: false,
+        pendingQuestions: []
+    }
+
     render(){
         return (
             <>
@@ -60,22 +65,36 @@ class Home extends Component {
                             <button type="submit">Submit Question</button>
                         </form>
                     </div>
-    
-                    {/* <!-- TODO: Make this table visible only to admin users --> */}
-                    <div className="approveTriviaTable">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Question</th>
-                                    <th>Approve</th>
-                                    <th>Deny</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {/* <!--Table rows inserted here with button to approve or deny them--> */}
-                            </tbody>
-                        </table>
-                    </div>
+                    
+                    {isAdmin ? 
+                        <div className="approveTriviaTable">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Question</th>
+                                        <th>Correct Answer</th>
+                                        <th>Approve</th>
+                                        <th>Deny</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.pendingQuestions.map((pendingQuestion) => {
+                                            return (
+                                                <div className="pendingQuestionContainer">
+                                                    {/* <div className="pendingQuestionQuestion">{pendingQuestion.question}</div>
+                                                    <div className="pendingQuestionAnswer">{pendingQuestion.correct_answer}</div>
+                                                    <div className="pendingQuestionApprove" onClick={() => approveQuestion(pendingQuestion)}>Approve</div>
+                                                    <div className="pendingQuestionDeny" onClick={() => denyQuestion(pendingQuestion)}>Deny</div> */}
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    {/* <!--Table rows inserted here with button to approve or deny them--> */}
+                                </tbody>
+                            </table>
+                        </div> : null
+                    }
                 </div>
             </>
         )
