@@ -1,6 +1,6 @@
 import './styles/style.scss';
 
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
@@ -9,11 +9,14 @@ import SignUp from './pages/SignUp';
 import EditAccount from './pages/EditAccount';
 import Home from './pages/Home';
 
+import UserContext from './context/userContext';
 
 const App = () => {
+    const [userData, setUserData] = useState({ user: {} });
+
     return (
         <Router>
-            <>
+            <UserContext.Provider value={{ userData, setUserData }}>
                 <div className="application">
                     <Switch>
                         <Redirect exact from="/" to="/signIn" />
@@ -32,9 +35,9 @@ const App = () => {
                         <Redirect exact from="*" to="/" />
                     </Switch>
                 </div>
-            </>
+            </UserContext.Provider>
         </Router>
-    )
+    );
 }
 
 ReactDOM.render(<App />, document);
