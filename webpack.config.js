@@ -1,23 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'none',
-  entry: './src/index.js',
+  entry: path.resolve(__dirname, './src/index.js'),
   target: 'node',
-  // node: {
-    // process: false,
-    // Buffer: false,
-    // require: false,
-  // },
-  output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: 'http://localhost/',
-    filename: 'bundle.js'
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: 80 //TODO use 443 with HTTPS
-  },
+  mode: 'none',
   module: {
     rules: [
       {
@@ -28,11 +14,6 @@ module.exports = {
           'sass-loader'
         ]
       },
-      // {
-      //   test: /\.js$/,
-      //   exclude: /node_modules/,
-      //   use: ['source-map-loader']
-      // },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -47,8 +28,16 @@ module.exports = {
       }
     ]
   },
-  externals: {
-    express: 'express',
-    // express: require('express'),
-  }
+  resolve: {
+    extensions: ['*', '.js']
+  },
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'bundle.js'
+  },
+  // devServer: {
+  //   contentBase: path.resolve(__dirname, './dist'),
+  //   port: 80, //TODO use 443 with HTTPS
+  //   hot: true
+  // }
 }
