@@ -2,9 +2,11 @@
   "name": "trivia-app",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "template.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "dev": "nodemon",
+    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
+    "start": "NODE_ENV=production node ./dist/server.generated.js"
   },
   "repository": {
     "type": "git",
