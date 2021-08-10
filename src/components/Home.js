@@ -1,5 +1,3 @@
-import '../styles/style.scss';
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';
@@ -77,7 +75,7 @@ class Home extends Component {
                             </form>
                         </div>
                         
-                        {isAdmin ? 
+                        {this.state.isAdmin ? 
                             <div className="approveTriviaTable">
                                 <table>
                                     <thead>

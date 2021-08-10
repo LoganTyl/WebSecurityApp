@@ -1,8 +1,5 @@
-import '../styles/style.scss';
-
 import React, {Component} from 'react';
 import ReactDOM, { render } from 'react-dom';
-import { response } from 'express';
 
 class SignUp extends Component {
     state = {
@@ -204,7 +201,7 @@ class SignUp extends Component {
                         <label htmlFor="emailSignUp">Email:</label>
                         <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com" value={this.state.email} onChange={this.checkEmail()}/>
                         {
-                            isEmailValid ?
+                            this.state.isEmailValid ?
                             <span className="errorMessage">Invalid email!</span> :
                             null
                         }
@@ -227,7 +224,7 @@ class SignUp extends Component {
                         {/* <span className="errorMessage" hidden>Invalid phone number!</span> */}
                         
                         {/* TODO: Get button to redirect to /signIn */}
-                        <button type="submit" className="signUpBtn" onClick={() => signUpUser()}>Sign Up</button>
+                        <button type="submit" className="signUpBtn" onClick={() => this.signUpUser()}>Sign Up</button>
                     </div>
                 </div>
             </>

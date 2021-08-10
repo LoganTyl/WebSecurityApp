@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-  
-import './styles/style.scss';
-
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import EditAccount from './components/EditAccount';
 import Home from './components/Home';
 
-// import UserContext from './context/userContext';
+import UserContext from './context/UserContext';
 
 const App = () => {
-    // const [userData, setUserData] = useState({ user: {} });
+    const [userData, setUserData] = useState({ user: {} });
 
     return (
         <Router>
-            {/* <UserContext.Provider value={{ userData, setUserData }}> */}
+            <UserContext.Provider value={{ userData, setUserData }}>
                 <div className="application">
                     <Switch>
                         <Redirect exact from="/" to="/signIn" />
@@ -38,7 +33,7 @@ const App = () => {
                         <Redirect exact from="*" to="/" />
                     </Switch>
                 </div>
-            {/* </UserContext.Provider> */}
+            </UserContext.Provider>
         </Router>
     );
 }

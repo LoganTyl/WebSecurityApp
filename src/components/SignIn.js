@@ -1,9 +1,7 @@
-import '../styles/style.scss';
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import UserContext from '../context/userContext';
+import UserContext from '../context/UserContext';
 
 class SignIn extends Component {
     constructor (props) {
@@ -21,7 +19,7 @@ class SignIn extends Component {
         this.setState({
             [prop]: value
         }, () => {
-            console.log(state);
+            console.log(this.state);
         });
     }
 

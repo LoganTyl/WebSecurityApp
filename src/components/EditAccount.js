@@ -1,5 +1,3 @@
-import '../styles/style.scss';
-
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';
@@ -210,7 +208,7 @@ class EditAccount extends Component {
                             {/* <span className="errorMessage" hidden>Invalid phone number!</span> */}
                             
                             {/* TODO: Get button to redirect to /signIn */}
-                            <button type="submit" className="EditBtn" onClick={() => editUser()}>Save User</button>
+                            <button type="submit" className="EditBtn" onClick={() => this.editUser()}>Save User</button>
                         </div>
                     </div>
                 </>
