@@ -39,7 +39,7 @@ class SignIn extends Component {
         return (
             <>
                 <div className="container">
-                    <h1>Sign In</h1>
+                    <h1>Trivia App Sign In</h1>
                     <div className="signInFields">
                         <p className="invalidSignIn" hidden>Invalid email and/or password!</p>
     
@@ -52,7 +52,7 @@ class SignIn extends Component {
                         {/* TODO: Get button to redirect to /home */}
                         <button type="submit" className="signInBtn" onClick={this.signUserIn}>Sign In</button>
                     </div>
-                    <a href="/signUp">Create an Account</a>
+                    <a href="/signUp" className="createAccountLink">Create an Account</a>
                 </div>
             </>
         )

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 class EditAccount extends Component {
     state = {
-        isSignedIn: false,
+        isSignedIn: true,
         fname: '',
         lname: '',
         street: '',
@@ -20,6 +20,7 @@ class EditAccount extends Component {
     }
 
     checkFName(event){
+        console.log(event);
         this.setState({
             fname: event.target.value
         })
@@ -112,25 +113,25 @@ class EditAccount extends Component {
                     <div className="container">
                         <a href="signIn">Back</a>
                         <h1>Sign Up</h1>
-                        <div className="EditFields">
+                        <div className="editFields">
                             <label htmlFor="fNameEdit">First Name:</label>
-                            <input type="text" className="nameInput" id="fNameEdit" placeholder="John" minLength="2" value={this.state.fname} onChange={this.checkFName()}/>
+                            <input type="text" className="nameInput" id="fNameEdit" placeholder="John" minLength="2" value={this.state.fname} onChange={this.checkFName.bind(this)}/>
                             {/* <span className="errorMessage" hidden>Invalid name!</span> */}
         
                             <label htmlFor="lNameEdit">Last Name:</label>
-                            <input type="text" className="nameInput" id="lNameEdit" placeholder="Doe" minLength="2" value={this.state.lname} onChange={this.checkLName()}/>
+                            <input type="text" className="nameInput" id="lNameEdit" placeholder="Doe" minLength="2" value={this.state.lname} onChange={this.checkLName.bind(this)}/>
                             {/* <span className="errorMessage" hidden>Invalid name!</span> */}
         
                             <label htmlFor="addressEdit">Address:</label>
-                            <input type="text" className="addressInput" id="addressEdit" placeholder="111 Faux Street" value={this.state.street} onChange={this.checkStreet()}/>
+                            <input type="text" className="addressInput" id="addressEdit" placeholder="111 Faux Street" value={this.state.street} onChange={this.checkStreet.bind(this)}/>
                             {/* <span className="errorMessage" hidden>Invalid address!</span> */}
         
                             <label htmlFor="cityEdit">City:</label>
-                            <input type="text" className="cityEdit" id="cityEdit" placeholder="Salt Lake City" value={this.state.city} onChange={this.checkCity}/>
+                            <input type="text" className="cityEdit" id="cityEdit" placeholder="Salt Lake City" value={this.state.city} onChange={this.checkCity.bind(this)}/>
                             {/* <span className="errorMessage" hidden>Invalid city!</span> */}
         
                             <label htmlFor="stateEdit">State:</label>
-                            <select name="stateSelect" id="stateEdit" value={this.state.us_State} onChange={this.checkState()}>
+                            <select name="stateSelect" id="stateEdit" value={this.state.us_State} onChange={this.checkState.bind(this)}>
                                 <option value="AL">AL</option>
                                 <option value="AK">AK</option>
                                 <option value="AR">AR</option>	
@@ -185,18 +186,18 @@ class EditAccount extends Component {
                             </select>
         
                             <label htmlFor="zipEdit">Zip Code:</label>
-                            <input type="number" className="zipEdit" id="zipEdit" placeholder="12345" maxlength="5" value={this.state.zipcode} onChange={this.checkZip()}/>
+                            <input type="number" className="zipEdit" id="zipEdit" placeholder="12345" maxlength="5" value={this.state.zipcode} onChange={this.checkZip.bind(this)}/>
                             {/* <span className="errorMessage">Invalid zip code!</span> */}
 
                             <label htmlFor="emailSignUp">Email:</label>
-                            <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com" value={this.state.email} onChange={this.checkEmail()} disabled/>
+                            <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com" value={this.state.email} disabled/>
                             
                             <label htmlFor="passwordEdit">Password:</label>
-                            <input type="text" className="addressInput" id="addressEdit" minLength="10" value={this.state.password} onChange={this.checkPassword()}/>
+                            <input type="text" className="addressInput" id="addressEdit" minLength="10" value={this.state.password} onChange={this.checkPassword.bind(this)}/>
                             {/* <span className="errorMessage" hidden>Invalid password!</span> */}
         
                             <label htmlFor="confirmPassword">Confirm Password:</label>
-                            <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="10" value={this.state.confirmPassword} onChange={this.checkIfSamePassword()}/>
+                            <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="10" value={this.state.confirmPassword} onChange={this.checkIfSamePassword.bind(this)}/>
                             {
                                 this.isSamePassword ?
                                 null :
@@ -204,7 +205,7 @@ class EditAccount extends Component {
                             }
         
                             <label htmlFor="phoneNumberEdit">Phone:</label>
-                            <input type="tel" className="phoneNumberInput" id="phoneNumberEdit" placeholder="111-222-3333" value={this.state.phone} onChange={this.checkPhone()}/>
+                            <input type="tel" className="phoneNumberInput" id="phoneNumberEdit" placeholder="111-222-3333" value={this.state.phone} onChange={this.checkPhone.bind(this)}/>
                             {/* <span className="errorMessage" hidden>Invalid phone number!</span> */}
                             
                             {/* TODO: Get button to redirect to /signIn */}
