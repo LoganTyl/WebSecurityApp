@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import SignIn from './components/SignIn';
@@ -10,11 +9,17 @@ import Home from './components/Home';
 import UserContext from './context/UserContext';
 
 const App = () => {
-    const [userData, setUserData] = useState({ user: {} });
+    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState({
+        email: 'jeff@gmail.com',
+        firstName: 'Jeffrey',
+        lastName: 'Rehm',
+        isAdmin: true
+    });
 
     return (
         <Router>
-            <UserContext.Provider value={{ userData, setUserData }}>
+            <UserContext.Provider value={{ user, setUser }}>
                 <div className="application">
                     <Switch>
                         <Redirect exact from="/" to="/signIn" />
