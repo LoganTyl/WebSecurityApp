@@ -41,7 +41,7 @@ const EditAccount = () => {
     else {
         return (
             <div className='container'>
-                <a href='signIn'>Back</a>
+                <a href='home'>Back</a>
                 
                 <h1>Sign Up</h1>
                 <form className='editFields' onSubmit={submitEditUserForm}>
