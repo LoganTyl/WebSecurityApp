@@ -11,21 +11,21 @@ import UserContext from './context/UserContext';
 
 const App = () => {
     const [api, setApi] = useState('http://localhost:3000/api');
-    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
     
     // TODO For testing purposes only
-    const [user, setUser] = useState({
-        _id: '###',
-        email: 'jeff@gmail.com',
-        firstName: 'Jeffrey',
-        lastName: 'Rehm',
-        phone: '(801) 123-4567',
-        street: '143 S Main St',
-        city: 'Salt Lake City',
-        state: 'UT',
-        zipCode: '84111',
-        isAdmin: true
-    });
+    // const [user, setUser] = useState({
+    //     _id: '###',
+    //     email: 'jeff@gmail.com',
+    //     firstName: 'Jeffrey',
+    //     lastName: 'Rehm',
+    //     phone: '(801) 123-4567',
+    //     street: '143 S Main St',
+    //     city: 'Salt Lake City',
+    //     state: 'UT',
+    //     zipCode: '84111',
+    //     isAdmin: true
+    // });
 
     return (
         <Router>
