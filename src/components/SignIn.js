@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 
 import APIContext from '../context/APIContext';
@@ -9,12 +10,13 @@ const SignIn = () => {
     const { user, setUser } = useContext(UserContext);
 
     const [error, setError] = useState(null);
-    
+
+    // TODO remove me
+    console.log(user);
+
     useEffect(() => {
-        // TODO fix me!
-        console.log(user);
         if (user && user._id) setUser(null);
-    }, [user, setUser]);
+    });
 
     const submitSignInForm = async evt => {
         evt.preventDefault();
@@ -24,17 +26,16 @@ const SignIn = () => {
             email: evt.target.email.value,
             password: evt.target.password.value
         })
-        .then(user => {
-            setUser(user);
-            window.location.href='/home';
+        .then(res => {
+            setUser(res.data);
         })
         .catch(reason => {
-            setError(reason.message);
-            console.log(reason.message);
+            setError(reason.response.data.error);
         })
 
     }
 
+    if (user && user._id) return <Redirect to='/home' />
     return (
         <div className='container'>
             <a href='/signUp'>Create an Account</a>
@@ -53,12 +54,12 @@ const SignIn = () => {
 
             { error ?
                 <>
-                    <span className="errorMessage">{error}</span>
+                    <span className='errorMessage'>{error}</span>
                     <br />
                 </>
             : null }
         </div>
-    )
+    );
 }
 
 export default SignIn;

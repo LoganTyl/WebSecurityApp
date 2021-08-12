@@ -11,42 +11,35 @@ import UserContext from './context/UserContext';
 
 const App = () => {
     const [api, setApi] = useState('http://localhost:3000/api');
-    const [user, setUser] = useState(null);
-    
-    // TODO For testing purposes only
-    // const [user, setUser] = useState({
-    //     _id: '###',
-    //     email: 'jeff@gmail.com',
-    //     firstName: 'Jeffrey',
-    //     lastName: 'Rehm',
-    //     phone: '(801) 123-4567',
-    //     street: '143 S Main St',
-    //     city: 'Salt Lake City',
-    //     state: 'UT',
-    //     zipCode: '84111',
-    //     isAdmin: true
-    // });
+    const [user, setUserState] = useState(JSON.parse(localStorage.getItem('user')));
+
+    const setUser = value => {
+        console.log('set user local storage: ', value);
+        setUserState(value);
+        if (value) localStorage.setItem('user', JSON.stringify(value));
+        else localStorage.removeItem('user');
+    }
 
     return (
         <Router>
             <APIContext.Provider value={{ api, setApi }}>
                 <UserContext.Provider value={{ user, setUser }}>
-                    <div className="application">
+                    <div className='application'>
                         <Switch>
-                            <Redirect exact from="/" to="/home" />
-                            <Route exact path="/signIn">
+                            <Redirect exact from='/' to='/home' />
+                            <Route exact path='/signIn'>
                                 <SignIn/>
                             </Route>
-                            <Route exact path="/signUp">
+                            <Route exact path='/signUp'>
                                 <SignUp/>
                             </Route>
-                            <Route exact path="/home">
+                            <Route exact path='/home'>
                                 <Home/>
                             </Route>
-                            <Route exact path="/editAccount">
+                            <Route exact path='/editAccount'>
                                 <EditAccount/>
                             </Route>
-                            <Redirect exact from="*" to="/" />
+                            <Redirect exact from='*' to='/' />
                         </Switch>
                     </div>
                 </UserContext.Provider>
