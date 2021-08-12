@@ -1,0 +1,104 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #C5D7E8;
+}
+
+a{
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.container {
+    text-align: center;
+    border: 2px solid #a2a2d3;
+    border-radius: 50px;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 20px 20px;
+    background-color: #C4C4F5;
+}
+
+.signInFields, .signUpFields {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.signInFields label, .signUpFields label {
+    font-weight: bold;
+}
+
+.signInFields input, .signUpFields input {
+    width: 30%;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 5px;
+}
+
+.signUpFields select {
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.createAccountLink {
+    margin: 50px;
+}
+
+.homeHeaders {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.randomTriviaContainer button {
+    margin: 5px;
+}
+
+.submitTriviaForm {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 0 auto;
+}
+
+.submitTriviaForm input {
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.submitTriviaForm select {
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.editFields {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.editFields input {
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.editFields select {
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.errorMessage {
+    color: red;
+}
+
+button[type='submit'] {
+    margin-bottom: 20px;
+}
