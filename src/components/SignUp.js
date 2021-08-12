@@ -1,67 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import Axios from 'axios';
 
-import UserContext from '../context/UserContext';
+import APIContext from '../context/APIContext';
 
 const SignUp = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [street, setStreet] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [zipCode, setZipCode] = useState('');
+    const { api } = useContext(APIContext);
 
-    const [isEmailValid, setIsEmailValid] = useState(false);
-    const [isSamePassword, setIsSamePassword] = useState(true);
+    const [error, setError] = useState(null);
 
-    const submitSignUpForm = evt => {
-        // TODO remove AWS links and switch to custom back-end API
-        fetch('https://5s65q9qmwk.execute-api.us-west-1.amazonaws.com/api/user/create', {
-            method: "POST",
-            body: {
-                "email": "",
-                "password": "",
-                "firstName": "",
-                "lastName": "",
-                "phone": "",
-                "street": "",
-                "city": "",
-                "state": "",
-                "zip_code": ""
-            }
-        })
-        .then(data => console.log(data));
-        // window.location.href = "/signIn";
+    const submitSignUpForm = async evt => {
+        evt.preventDefault();
+        setError(null);
+
+        if (evt.target.password.value === evt.target.confirmPassword.value) {
+            await Axios.post(`${api}/user/create`, {
+                firstName: evt.target.firstName.value,
+                lastName: evt.target.lastName.value,
+                email: evt.target.email.value,
+                phone: evt.target.phone.value,
+                street: evt.target.street.value,
+                city: evt.target.city.value,
+                state: evt.target.state.value,
+                zipCode: evt.target.zipCode.value,
+                password: evt.target.password.value
+            })
+            .then(user => {
+                if (user._id) window.location.href = "/signIn";
+            })
+            .catch(reason => {
+                setError(reason.message);
+                console.log(reason.message);
+            });
+        } else setError('Passwords must match');
     }
 
-    //validate takes email and password
-    //update is same as create but only email and password are required
     return (
         <div className="container">
             <a href="signIn">Back</a>
+            
             <h1>Sign Up</h1>
-            <div className="signUpFields">
-                <label htmlFor="firstNameSignUp">First Name:</label>
-                <input type="text" className="nameInput" id="firstNameSignUp" placeholder="John" minLength="2" value={this.state.firstName} onChange={this.checkfirstName()}/>
-                {/* <span className="errorMessage" hidden>Invalid name!</span> */}
+            <form className="signUpFields" onSubmit={submitSignUpForm}>
+                <label htmlFor="firstName">First Name</label>
+                <input type="text" id="firstName" required/>
 
-                <label htmlFor="lastNameSignUp">Last Name:</label>
-                <input type="text" className="nameInput" id="lastNameSignUp" placeholder="Doe" minLength="2" value={this.state.lastName} onChange={this.checklastName()}/>
-                {/* <span className="errorMessage" hidden>Invalid name!</span> */}
+                <label htmlFor="lastName">Last Name</label>
+                <input type="text" id="lastName" required/>
 
-                <label htmlFor="addressSignUp">Address:</label>
-                <input type="text" className="addressInput" id="addressSignUp" placeholder="111 Faux Street" value={this.state.street} onChange={this.checkStreet()}/>
-                {/* <span className="errorMessage" hidden>Invalid address!</span> */}
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" required/>
 
-                <label htmlFor="citySignUp">City:</label>
-                <input type="text" className="citySignUp" id="citySignUp" placeholder="Salt Lake City" value={this.state.city} onChange={this.checkCity}/>
-                {/* <span className="errorMessage" hidden>Invalid city!</span> */}
+                <label htmlFor="phone">Phone</label>
+                <input type="tel" id="phone" required/>
 
-                <label htmlFor="stateSignUp">State:</label>
-                <select name="stateSelect" id="stateSignUp" value={this.state.state} onChange={this.checkState()}>
+                <label htmlFor="street">Address</label>
+                <input type="text" id="street" required/>
+
+                <label htmlFor="city">City</label>
+                <input type="text" id="city" required/>
+
+                <label htmlFor="state">State</label>
+                <select name="state" id="state" required>
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
                     <option value="AR">AR</option>	
@@ -93,7 +91,7 @@ const SignUp = () => {
                     <option value="NE">NE</option>
                     <option value="NH">NH</option>
                     <option value="NJ">NJ</option>
-                    <option value="NM">NM</option>			
+                    <option value="NM">NM</option>
                     <option value="NV">NV</option>
                     <option value="NY">NY</option>
                     <option value="ND">ND</option>
@@ -115,38 +113,24 @@ const SignUp = () => {
                     <option value="WY">WY</option>
                 </select>
 
-                <label htmlFor="zipSignUp">Zip Code:</label>
-                <input type="number" className="zipSignUp" id="zipSignUp" placeholder="12345" maxlength="5" value={this.state.zipCode} onChange={this.checkZip()}/>
-                {/* <span className="errorMessage">Invalid zip code!</span> */}
+                <label htmlFor="zipCode">Zip Code</label>
+                <input type="number" id="zipCode" required/>
 
-                <label htmlFor="emailSignUp">Email:</label>
-                <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com" value={this.state.email} onChange={this.checkEmail()}/>
-                {
-                    this.state.isEmailValid ?
-                    <span className="errorMessage">Invalid email!</span> :
-                    null
-                }
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" required/>
 
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required/>
                 
-                <label htmlFor="passwordSignUp">Password:</label>
-                <input type="text" className="addressInput" id="addressSignUp" minLength="10" value={this.state.password} onChange={this.checkPassword()}/>
-                {/* <span className="errorMessage" hidden>Invalid password!</span> */}
+                <button type="submit">Sign Up</button>
+            </form>
 
-                <label htmlFor="confirmPassword">Confirm Password:</label>
-                <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="10" value={this.state.confirmPassword} onChange={this.checkIfSamePassword()}/>
-                {
-                    this.isSamePassword ?
-                    null :
-                    <span className="errorMessage">Passwords do not match!</span>
-                }
-
-                <label htmlFor="phoneNumberSignUp">Phone:</label>
-                <input type="tel" className="phoneNumberInput" id="phoneNumberSignUp" placeholder="111-222-3333" value={this.state.phone} onChange={this.checkPhone()}/>
-                {/* <span className="errorMessage" hidden>Invalid phone number!</span> */}
-                
-                {/* TODO: Get button to redirect to /signIn */}
-                <button type="submit" className="signUpBtn" onClick={() => this.signUpUser()}>Sign Up</button>
-            </div>
+            { error ?
+                <>
+                    <span className="errorMessage">{error}</span>
+                    <br />
+                </>
+            : null }
         </div>
     )
 }

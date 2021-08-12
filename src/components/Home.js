@@ -1,41 +1,55 @@
 import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import Axios from 'axios';
 
+import APIContext from '../context/APIContext';
 import UserContext from '../context/UserContext';
 
 const Home = () => {
     const [pendingTrivia, setPendingTrivia] = useState([]);
 
+    const { api } = useContext(APIContext);
     const { user } = useContext(UserContext);
 
-    const submitTriviaQuestion = evt => {
+    const [error, setError] = useState(null);
+
+    console.log(user);
+
+    const submitTriviaQuestion = async evt => {
         evt.preventDefault();
 
-        // TODO use our API
-        console.log('Submit Trivia Question');
-        const trivia = {
+        await Axios.post(`${api}/question/create`, {
             category: evt.target.category.value,
             question: evt.target.question.value,
             answer: evt.target.answer.value
-        }
-        console.log(trivia.category);
-        console.log(trivia.question);
-        console.log(trivia.answer);
-
-        setPendingTrivia([...pendingTrivia, trivia]);
+        })
+        .catch(reason => {
+            setError(reason.message);
+            console.log(reason.message);
+        });
+        
+        await Axios.get(`${api}/question/pending`)
+        .then(res => {
+            setPendingTrivia(res);
+            console.log(res);
+        })
+        .catch(reason => {
+            setError(reason.message);
+            console.log(reason.message);
+        });
     }
 
-    const acceptTriviaQuestion = trivia => {
-        // TODO use our API
+    const updateTriviaQuestionApproval = async (trivia, approved) => {
         console.log(`Accept Trivia Question "${trivia.question}" (${trivia.answer})`);
+        
+        await Axios.put(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`)
+        .catch(reason => {
+            setError(reason.message);
+            console.log(reason.message);
+        });
     }
 
-    const rejectTriviaQuestion = trivia => {
-        // TODO use our API
-        console.log(`Reject Trivia Question "${trivia.question}" (${trivia.answer})`);
-    }
-
-    if (!user) return <Redirect to='/signIn'/>
+    if (!(user && user._id)) return <Redirect to='/signIn'/>
     else {
         return (
             <div className='container'>
@@ -45,8 +59,8 @@ const Home = () => {
                 </div>
                 
                 <div className='randomTriviaContainer'>
-                    {/* <!-- TODO: Have a 50/50 roll of either pulling the question from the api or the database if the db is not empty -->
-                    <!-- * Thinking of doing only True/False questions--> */}
+                    {/* TODO: Have a 50/50 roll of either pulling the question from the api or the database if the db is not empty
+                        Thinking of doing only True/False questions */}
                     <h3>Random Question</h3>
                     <p className='triviaQuestion'>Hello World</p>
                     <button type='button' name='true'>True</button>
@@ -82,19 +96,20 @@ const Home = () => {
                         <option value='31'>Entertainment: Japanese Anime & Manga</option>
                         <option value='32'>Entertainment: Cartoon & Animations</option>
                     </select>
+                    <br/>
 
                     <label htmlFor='question'>Question</label>
                     <input type='text' id='question' placeholder='Mickey Mouse is owned by Disney'/>
+                    <br/>
 
                     <label htmlFor='answer'>Select the correct answer:</label>
                     <div className="radioBtnDiv">
                         <input type='radio' id='answer' value='true'/>
                         <span>True</span>
-                    </div>
-                    <div className="radioBtnDiv">
                         <input type='radio' id='answer' value='false'/>
                         <span>False</span>
                     </div>
+                    <br/>
 
                     <button type='submit'>Submit Question</button>
                 </form>
@@ -116,14 +131,21 @@ const Home = () => {
                                         <tr className='pendingTrivia'>
                                             <td className='pendingTriviaQuestion'>{trivia.question}</td>
                                             <td className='pendingTriviaAnswer'>{trivia.answer}</td>
-                                            <td className='pendingTriviaApprove' onClick={() => acceptTriviaQuestion(trivia)}>Approve</td>
-                                            <td className='pendingTriviaReject' onClick={() => rejectTriviaQuestion(trivia)}>Reject</td>
+                                            <td className='pendingTriviaApprove' onClick={() => updateTriviaQuestionApproval(trivia, true)}>Approve</td>
+                                            <td className='pendingTriviaReject' onClick={() => updateTriviaQuestionApproval(trivia, false)}>Reject</td>
                                         </tr>
                                     );
                                 }) }
                             </tbody>
                         </table>
                     </div>
+                : null }
+
+                { error ?
+                    <>
+                        <span className="errorMessage">{error}</span>
+                        <br />
+                    </>
                 : null }
             </div>
         );

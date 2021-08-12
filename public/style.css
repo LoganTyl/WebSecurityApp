@@ -94,3 +94,11 @@ a{
     margin: 10px;
     padding: 5px;
 }
+
+.errorMessage {
+    color: red;
+}
+
+button[type='submit'] {
+    margin-bottom: 20px;
+}

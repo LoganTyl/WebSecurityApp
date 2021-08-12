@@ -1,68 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import Axios from 'axios';
 
+import APIContext from '../context/APIContext';
 import UserContext from '../context/UserContext';
 
 const EditAccount = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [street, setStreet] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [zipCode, setZipCode] = useState('');
+    const { api } = useContext(APIContext);
+    const { user, setUser } = useContext(UserContext);
 
-    const [isEmailValid, setIsEmailValid] = useState(false);
-    const [isSamePassword, setIsSamePassword] = useState(true);
-    const [isSignedIn, setIsSignedIn] = useState(true);
+    const [error, setError] = useState(null);
 
-    const submitEditUserForm = () => {
-        // TODO remove AWS links and switch to custom back-end API
-        fetch('https://5s65q9qmwk.execute-api.us-west-1.amazonaws.com/api/user/update', {
-            method: "PUT",
-            body: {
-                "email": "",
-                "password": "",
-                "fname": "",
-                "lname": "",
-                "phone": "",
-                "street": "",
-                "city": "",
-                "state": "",
-                "zip_code": ""
-            }
-        })
-        .then(data => console.log(data));
+    const submitEditUserForm = async evt => {
+        evt.preventDefault();
+        setError(null);
+
+        if (evt.target.password.value === evt.target.confirmPassword.value) {
+            await Axios.put(`${api}/user/update`, {
+                firstName: evt.target.firstName.value,
+                lastName: evt.target.lastName.value,
+                email: evt.target.email.value,
+                phone: evt.target.phone.value,
+                street: evt.target.street.value,
+                city: evt.target.city.value,
+                state: evt.target.state.value,
+                zipCode: evt.target.zipCode.value,
+                password: evt.target.password.value
+            })
+            .then(user => {
+                setUser(user);
+            })
+            .catch(reason => {
+                setError(reason.message);
+                console.log(reason.message);
+            })
+        } else setError('Passwords must match');
     }
 
-    if (!this.state.isSignedIn) return <Redirect to="/signIn"/>
+    if (!(user && user._id)) return <Redirect to='/signIn'/>
     else {
         return (
-            <div className="container">
-                <a href="signIn">Back</a>
+            <div className='container'>
+                <a href='signIn'>Back</a>
+                
                 <h1>Sign Up</h1>
-                <div className="EditFields">
-                    <label htmlFor="fNameEdit">First Name:</label>
-                    <input type="text" className="nameInput" id="fNameEdit" placeholder="John" minLength="2" value={this.state.fname} onChange={this.checkFName()}/>
-                    {/* <span className="errorMessage" hidden>Invalid name!</span> */}
+                <form className='editFields' onSubmit={submitEditUserForm}>
+                    <label htmlFor="firstName">First Name</label>
+                    <input type="text" id="firstName" defaultValue={user.firstName} required/>
 
-                    <label htmlFor="lNameEdit">Last Name:</label>
-                    <input type="text" className="nameInput" id="lNameEdit" placeholder="Doe" minLength="2" value={this.state.lname} onChange={this.checkLName()}/>
-                    {/* <span className="errorMessage" hidden>Invalid name!</span> */}
+                    <label htmlFor="lastName">Last Name</label>
+                    <input type="text" id="lastName" defaultValue={user.lastName} required/>
 
-                    <label htmlFor="addressEdit">Address:</label>
-                    <input type="text" className="addressInput" id="addressEdit" placeholder="111 Faux Street" value={this.state.street} onChange={this.checkStreet()}/>
-                    {/* <span className="errorMessage" hidden>Invalid address!</span> */}
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" defaultValue={user.email} required/>
 
-                    <label htmlFor="cityEdit">City:</label>
-                    <input type="text" className="cityEdit" id="cityEdit" placeholder="Salt Lake City" value={this.state.city} onChange={this.checkCity}/>
-                    {/* <span className="errorMessage" hidden>Invalid city!</span> */}
+                    <label htmlFor="phone">Phone</label>
+                    <input type="tel" id="phone" defaultValue={user.phone} required/>
 
-                    <label htmlFor="stateEdit">State:</label>
-                    <select name="stateSelect" id="stateEdit" value={this.state.us_State} onChange={this.checkState()}>
+                    <label htmlFor="street">Address</label>
+                    <input type="text" id="street" defaultValue={user.street} required/>
+
+                    <label htmlFor="city">City</label>
+                    <input type="text" id="city" defaultValue={user.city} required/>
+
+                    <label htmlFor="state">State</label>
+                    <select name="state" id="state" defaultValue={user.state} required>
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
                         <option value="AR">AR</option>	
@@ -94,7 +96,7 @@ const EditAccount = () => {
                         <option value="NE">NE</option>
                         <option value="NH">NH</option>
                         <option value="NJ">NJ</option>
-                        <option value="NM">NM</option>			
+                        <option value="NM">NM</option>
                         <option value="NV">NV</option>
                         <option value="NY">NY</option>
                         <option value="ND">ND</option>
@@ -116,32 +118,24 @@ const EditAccount = () => {
                         <option value="WY">WY</option>
                     </select>
 
-                    <label htmlFor="zipEdit">Zip Code:</label>
-                    <input type="number" className="zipEdit" id="zipEdit" placeholder="12345" maxlength="5" value={this.state.zipcode} onChange={this.checkZip()}/>
-                    {/* <span className="errorMessage">Invalid zip code!</span> */}
+                    <label htmlFor="zipCode">Zip Code</label>
+                    <input type="number" id="zipCode" defaultValue={user.zipCode} required/>
 
-                    <label htmlFor="emailSignUp">Email:</label>
-                    <input type="email" className="emailInput" id="emailSignUp" placeholder="johndoe@gmail.com" value={this.state.email} onChange={this.checkEmail()} disabled/>
-                    
-                    <label htmlFor="passwordEdit">Password:</label>
-                    <input type="text" className="addressInput" id="addressEdit" minLength="10" value={this.state.password} onChange={this.checkPassword()}/>
-                    {/* <span className="errorMessage" hidden>Invalid password!</span> */}
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" required/>
 
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <input type="text" className="confirmPasswordInput" id="confirmPassword" minLength="10" value={this.state.confirmPassword} onChange={this.checkIfSamePassword()}/>
-                    {
-                        this.isSamePassword ?
-                        null :
-                        <span className="errorMessage">Passwords do not match!</span>
-                    }
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required/>
 
-                    <label htmlFor="phoneNumberEdit">Phone:</label>
-                    <input type="tel" className="phoneNumberInput" id="phoneNumberEdit" placeholder="111-222-3333" value={this.state.phone} onChange={this.checkPhone()}/>
-                    {/* <span className="errorMessage" hidden>Invalid phone number!</span> */}
-                    
-                    {/* TODO: Get button to redirect to /signIn */}
-                    <button type="submit" className="EditBtn" onClick={() => this.editUser()}>Save User</button>
-                </div>
+                    <button type='submit'>Save User</button>
+                </form>
+
+                { error ?
+                    <>
+                        <span className='errorMessage'>{error}</span>
+                        <br />
+                    </>
+                : null }
             </div>
         )
     }
