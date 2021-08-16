@@ -11,9 +11,6 @@ const EditAccount = () => {
 
     const [error, setError] = useState(null);
 
-    // TODO remove me
-    console.log(user);
-
     const submitEditUserForm = async evt => {
         evt.preventDefault();
         setError(null);
@@ -131,12 +128,10 @@ const EditAccount = () => {
                 <button type='submit'>Save User</button>
             </form>
 
-            { error ?
-                <>
-                    <span className='errorMessage'>{error}</span>
-                    <br />
-                </>
-            : null }
+            { error ? <>
+                <span className='errorMessage'>{error}</span>
+                <br />
+            </> : null }
         </div>
     )
 }

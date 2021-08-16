@@ -99,6 +99,10 @@ a{
     color: red;
 }
 
+.infoMessage {
+    color: blue;
+}
+
 button[type='submit'] {
     margin-bottom: 20px;
 }

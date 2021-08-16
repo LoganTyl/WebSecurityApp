@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -10,13 +10,6 @@ const SignIn = () => {
     const { user, setUser } = useContext(UserContext);
 
     const [error, setError] = useState(null);
-
-    // TODO remove me
-    console.log(user);
-
-    useEffect(() => {
-        if (user && user._id) setUser(null);
-    });
 
     const submitSignInForm = async evt => {
         evt.preventDefault();
@@ -52,12 +45,10 @@ const SignIn = () => {
                 <button type='submit'>Sign In</button>
             </form>
 
-            { error ?
-                <>
-                    <span className='errorMessage'>{error}</span>
-                    <br />
-                </>
-            : null }
+            { error ? <>
+                <span className='errorMessage'>{error}</span>
+                <br />
+            </> : null }
         </div>
     );
 }
