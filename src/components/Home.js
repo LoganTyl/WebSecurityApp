@@ -206,7 +206,7 @@ const Home = () => {
                         <tbody>
                             { pendingTrivia.map(trivia => {
                                 return (
-                                    <tr className='pendingTrivia'>
+                                    <tr className='pendingTrivia' key={trivia.question}>
                                         <td className='pendingTriviaQuestion'>{trivia.question}</td>
                                         <td className='pendingTriviaAnswer'>{trivia.answer}</td>
                                         <td className='pendingTriviaApprove'><button onClick={() => updateTriviaQuestionApproval(trivia, true)}>Approve</button></td>
