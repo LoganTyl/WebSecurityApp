@@ -23,6 +23,7 @@ const SignIn = () => {
             setUser(res.data);
         })
         .catch(reason => {
+            console.log(reason);
             setError(reason.response.data.error);
         })
 
