@@ -43,7 +43,8 @@ const Home = () => {
     const getPendingTrivia = async () => {
         await Axios.get(`${api}/question/pending`)
         .then(res => {
-            setPendingTrivia(res.data);
+            console.log(res);
+            if (res.data) setPendingTrivia(res.data);
         })
         .catch(reason => {
             setError(reason.response.data.error);
@@ -213,7 +214,7 @@ const Home = () => {
                                 return (
                                     <tr className='pendingTrivia' key={trivia.question}>
                                         <td className='pendingTriviaQuestion'>{trivia.question}</td>
-                                        <td className='pendingTriviaAnswer'>{trivia.answer}</td>
+                                        <td className='pendingTriviaAnswer'>{trivia.answer.toString()}</td>
                                         <td className='pendingTriviaApprove'><button onClick={() => updateTriviaQuestionApproval(trivia, true)}>Approve</button></td>
                                         <td className='pendingTriviaReject'><button onClick={() => updateTriviaQuestionApproval(trivia, false)}>Reject</button></td>
                                     </tr>
