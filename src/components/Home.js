@@ -85,6 +85,8 @@ const Home = () => {
             setError(reason.message);
             console.log(reason.message);
         });
+
+        getPendingTrivia();
     }
 
     if (!(user && user._id)) return <Redirect to='/signIn' />
