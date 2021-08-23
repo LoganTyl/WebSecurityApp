@@ -24,7 +24,7 @@ const Home = () => {
         let trivia = [];
         await Axios.get(`${api}/question/${evt.target.category.value}`)
         .then(res => {
-            trivia = res.data;
+            if(res.data) trivia = res.data;
         })
         .catch(reason => {
             setError(reason.response.data.error);
@@ -44,7 +44,6 @@ const Home = () => {
     const getPendingTrivia = useCallback(async () => {
         await Axios.get(`${api}/question/pending`)
         .then(res => {
-            console.log(res);
             if (res.data) setPendingTrivia(res.data);
         })
         .catch(reason => {
@@ -75,7 +74,8 @@ const Home = () => {
     }, [getPendingTrivia, synchronized]);
 
     const updateTriviaQuestionApproval = async (trivia, approved) => {
-        console.log(`Accept Trivia Question '${trivia.question}' (${trivia.answer})`);
+        console.log(`${approved? 'Accept' : 'Reject'} Trivia Question '${trivia.question}' (${trivia.answer})`);
+        console.log(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`);
         
         await Axios.put(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`, {
             email: user.email,
