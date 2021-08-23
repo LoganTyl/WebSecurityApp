@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 
@@ -41,7 +41,7 @@ const Home = () => {
         else setInfo('Incorrect. Please, try again.');
     }
 
-    const getPendingTrivia = async () => {
+    const getPendingTrivia = useCallback(async () => {
         await Axios.get(`${api}/question/pending`)
         .then(res => {
             console.log(res);
@@ -50,7 +50,7 @@ const Home = () => {
         .catch(reason => {
             setError(reason.response.data.error);
         });
-    }
+    }, [api]);
 
     const submitTriviaQuestion = async evt => {
         evt.preventDefault();
@@ -72,7 +72,7 @@ const Home = () => {
     useEffect(() => {
         getPendingTrivia();
         setSynchronized(true);
-    }, [synchronized]);
+    }, [getPendingTrivia, synchronized]);
 
     const updateTriviaQuestionApproval = async (trivia, approved) => {
         console.log(`Accept Trivia Question '${trivia.question}' (${trivia.answer})`);
@@ -209,6 +209,7 @@ const Home = () => {
                                 <th>Correct Answer</th>
                                 <th>Approve</th>
                                 <th>Reject</th>
+                                <th><button onClick={() => getPendingTrivia()}>Refresh</button></th>
                             </tr>
                         </thead>
                         <tbody>
