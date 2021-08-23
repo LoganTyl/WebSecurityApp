@@ -75,18 +75,18 @@ const Home = () => {
 
     const updateTriviaQuestionApproval = async (trivia, approved) => {
         console.log(`${approved? 'Accept' : 'Reject'} Trivia Question '${trivia.question}' (${trivia.answer})`);
-        console.log(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`);
         
         await Axios.put(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`, {
             email: user.email,
             token: user.token
         })
+        .then(async () => {
+            await getPendingTrivia();
+        })
         .catch(reason => {
             setError(reason.message);
             console.log(reason.message);
         });
-
-        getPendingTrivia();
     }
 
     if (!(user && user._id)) return <Redirect to='/signIn' />
