@@ -9,6 +9,7 @@ const Home = () => {
     // I treat question as singular and trivia as plural (questions)
     const [question, setQuestion] = useState(null);
     const [pendingTrivia, setPendingTrivia] = useState([]);
+    const [synchronized, setSynchronized] = useState(false);
     
     const { api } = useContext(APIContext);
     const { user } = useContext(UserContext);
@@ -70,7 +71,8 @@ const Home = () => {
 
     useEffect(() => {
         getPendingTrivia();
-    });
+        setSynchronized(true);
+    }, [synchronized]);
 
     const updateTriviaQuestionApproval = async (trivia, approved) => {
         console.log(`Accept Trivia Question '${trivia.question}' (${trivia.answer})`);
