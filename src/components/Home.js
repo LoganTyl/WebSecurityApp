@@ -54,6 +54,8 @@ const Home = () => {
         evt.preventDefault();
 
         await Axios.post(`${api}/question/create`, {
+            email: user.email,
+            token: user.token,
             category: evt.target.category.value,
             question: evt.target.question.value,
             answer: evt.target.answer.value
@@ -72,7 +74,10 @@ const Home = () => {
     const updateTriviaQuestionApproval = async (trivia, approved) => {
         console.log(`Accept Trivia Question '${trivia.question}' (${trivia.answer})`);
         
-        await Axios.put(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`)
+        await Axios.put(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`, {
+            email: user.email,
+            token: user.token
+        })
         .catch(reason => {
             setError(reason.message);
             console.log(reason.message);

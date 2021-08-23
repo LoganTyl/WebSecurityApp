@@ -13,12 +13,12 @@ import UserContext from './context/UserContext';
 const App = () => {
     // const [api, setApi] = useState('http://localhost:3000/api');
     const [api, setApi] = useState('http://10.0.115.234:3000/api');
-    const [user, setUserState] = useState(JSON.parse(localStorage.getItem('user')));
+    const [user, setUserState] = useState(JSON.parse(sessionStorage.getItem('user')));
 
     const setUser = value => {
         setUserState(value);
-        if (value) localStorage.setItem('user', JSON.stringify(value));
-        else localStorage.removeItem('user');
+        if (value) sessionStorage.setItem('user', JSON.stringify(value));
+        else sessionStorage.removeItem('user');
     }
 
     return (
