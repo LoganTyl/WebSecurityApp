@@ -28,7 +28,9 @@ const SignUp = () => {
                 if (res.data._id) window.location.href = '/signIn';
             })
             .catch(reason => {
-                setError(reason.response.data.error);
+                console.log(reason.response);
+                if (reason?.response?.data?.error) setError(reason.response.data.error);
+                else setError('An unknown error occured.');
             });
         } else setError('Passwords must match');
     }
@@ -124,12 +126,10 @@ const SignUp = () => {
                 <button type='submit'>Sign Up</button>
             </form>
 
-            { error ?
-                <>
-                    <span className='errorMessage'>{error}</span>
-                    <br />
-                </>
-            : null }
+            { error ? <>
+                <span className='errorMessage'>{error}</span>
+                <br />
+            </> : null }
         </div>
     )
 }

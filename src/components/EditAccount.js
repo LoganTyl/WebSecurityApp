@@ -11,24 +11,22 @@ const EditAccount = () => {
 
     const [error, setError] = useState(null);
 
-    // TODO remove me
-    console.log(user);
-
     const submitEditUserForm = async evt => {
         evt.preventDefault();
         setError(null);
 
         if (evt.target.password.value === evt.target.confirmPassword.value) {
             await Axios.put(`${api}/user/update`, {
+                email: user.email,
+                token: user.token,
                 firstName: evt.target.firstName.value,
                 lastName: evt.target.lastName.value,
-                email: evt.target.email.value,
                 phone: evt.target.phone.value,
                 street: evt.target.street.value,
                 city: evt.target.city.value,
                 state: evt.target.state.value,
                 zipCode: evt.target.zipCode.value,
-                password: evt.target.password.value
+                password: evt.target.password.value,
             })
             .then(res => {
                 setUser(res.data);
@@ -51,9 +49,6 @@ const EditAccount = () => {
 
                 <label htmlFor='lastName'>Last Name</label>
                 <input type='text' id='lastName' defaultValue={user.lastName} required/>
-
-                <label htmlFor='email'>Email</label>
-                <input type='email' id='email' defaultValue={user.email} required/>
 
                 <label htmlFor='phone'>Phone</label>
                 <input type='tel' id='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" defaultValue={user.phone} required/>
@@ -131,12 +126,10 @@ const EditAccount = () => {
                 <button type='submit'>Save User</button>
             </form>
 
-            { error ?
-                <>
-                    <span className='errorMessage'>{error}</span>
-                    <br />
-                </>
-            : null }
+            { error ? <>
+                <span className='errorMessage'>{error}</span>
+                <br />
+            </> : null }
         </div>
     )
 }
