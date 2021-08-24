@@ -52,6 +52,7 @@ const SignUp = () => {
 
                 <label htmlFor='phone'>Phone</label>
                 <input type='tel' id='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
+                <small>Ex: 111-222-3333</small>
 
                 <label htmlFor='street'>Address</label>
                 <input type='text' id='street' required/>
