@@ -192,9 +192,9 @@ const Home = () => {
 
                 <label htmlFor='answer'>Select the correct answer</label>
                 <div className='radioBtnDiv'>
-                    <input type='radio' id='answer' value='true'/>
+                    <input type='radio' id='answer' name="triviaAnswer" value='true'/>
                     <span>True</span>
-                    <input type='radio' id='answer' value='false'/>
+                    <input type='radio' id='answer' name="triviaAnswer" value='false'/>
                     <span>False</span>
                 </div>
                 <br/>
