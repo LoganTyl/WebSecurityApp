@@ -56,7 +56,7 @@ const EditAccount = () => {
                 <input type='email' id='email' defaultValue={user.email} required/>
 
                 <label htmlFor='phone'>Phone</label>
-                <input type='tel' id='phone' defaultValue={user.phone} required/>
+                <input type='tel' id='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" defaultValue={user.phone} required/>
 
                 <label htmlFor='street'>Address</label>
                 <input type='text' id='street' defaultValue={user.street} required/>

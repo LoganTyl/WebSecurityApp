@@ -49,7 +49,7 @@ const SignUp = () => {
                 <input type='email' id='email' required/>
 
                 <label htmlFor='phone'>Phone</label>
-                <input type='tel' id='phone' required/>
+                <input type='tel' id='phone' pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required/>
 
                 <label htmlFor='street'>Address</label>
                 <input type='text' id='street' required/>
