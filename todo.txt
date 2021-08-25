@@ -1,0 +1,23 @@
+## HOME ##
+Answer Trivia Questions Form
+- Visitors can request and answer trivia questions
+- Trivia Info: "Correct"/"Incorrect"/"Select Category" (Clear info on timer? QOL)
+
+Submit Trivia Questions Form
+- Users can submit trivia questions for approval
+- Submit Info: "Question Submitted"/"Bad Question" (Clear info on timer? QOL)
+- Clear form on submit (Clear formdata if 200, keep if >=400? QOL)
+- TODO: Skip approval? (Ensure questions are approved on fetch)
+
+Handle Trivia Submissions Table-Form
+- Admins can approve or reject submitted trivia questions
+- Store date/time of submission and display 'hours since' in table
+
+## EDIT ##
+Update User Info Form
+- User Info: "Account Updated"/"Field Invalid"
+
+
+
+## BACK END ##
+200 OK should have res.data (object in question if exists) and res.message (message for the user to see)
