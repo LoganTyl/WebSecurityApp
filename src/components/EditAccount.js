@@ -42,7 +42,9 @@ const EditAccount = () => {
         <div className='container'>
             <a href='home'>Back</a>
             
-            <h1>Sign Up</h1>
+            <h1>Update Account</h1>
+            <h3>Updating Account for {user.email}</h3>
+
             <form className='editFields' onSubmit={submitEditUserForm}>
                 <label htmlFor='firstName'>First Name</label>
                 <input type='text' id='firstName' defaultValue={user.firstName} required/>
