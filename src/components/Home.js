@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
 
 import APIContext from '../context/APIContext';
@@ -14,46 +13,52 @@ const Home = () => {
     const { api } = useContext(APIContext);
     const { user } = useContext(UserContext);
     
-    const [info, setInfo] = useState(null);
+    const [triviaInfo, setTriviaInfo] = useState(null);
+    const [submitInfo, setSubmitInfo] = useState(null);
+    const [approvalInfo, setApprovalInfo] = useState(null);
     const [error, setError] = useState(null);
     
-    const submitCategoryForm = async evt => {
-        evt.preventDefault();
-        setInfo(null);
-
+    const getTriviaQuestionByCategory = async category => {
         let trivia = [];
-        await Axios.get(`${api}/question/${evt.target.category.value}`)
+        await Axios.get(`${api}/question/${category}`)
         .then(res => {
             if(res.data) trivia = res.data;
         })
         .catch(reason => {
-            setError(reason.response.data.error);
+            console.log(reason);
+            if (reason.response.data.error) setError(reason.response.data.error);
         });
 
         if (trivia.length) setQuestion(trivia[Math.floor(Math.random() * trivia.length)]);
-        else setInfo('There are no questions in this category. You can add one below.');
+        else setTriviaInfo('There are no questions in this category. You can add one below.');
+    }
+
+    const submitCategoryForm = async evt => {
+        evt.preventDefault();
+        setTriviaInfo(null);
+        await getTriviaQuestionByCategory(evt.target.category.value);
     }
 
     const checkAnswer = async evt => {
-        setInfo(null);
+        setTriviaInfo(null);
 
-        if (question.answer.toString() === evt.target.name) setInfo('Correct!');
-        else setInfo('Incorrect. Please, try again.');
+        if (question.answer.toString() === evt.target.name) setTriviaInfo('Correct!');
+        else setTriviaInfo('Incorrect. Please, try again.');
     }
 
     const getPendingTrivia = useCallback(async () => {
+        setError(null);
         await Axios.get(`${api}/question/pending`)
         .then(res => {
             if (res.data) setPendingTrivia(res.data);
         })
         .catch(reason => {
-            setError(reason.response.data.error);
+            console.log(reason);
+            if (reason.response.data.error) setError(reason.response.data.error);
         });
     }, [api]);
 
     const submitTriviaQuestion = async evt => {
-        alert("Trivia question submitted!")
-
         evt.preventDefault();
 
         await Axios.post(`${api}/question/create`, {
@@ -63,8 +68,13 @@ const Home = () => {
             question: evt.target.question.value,
             answer: evt.target.answer.value
         })
+        .then(res => {
+            alert(res.message) // TODO use info
+            setError(null);
+        })
         .catch(reason => {
-            setError(reason.response.data.error);
+            console.log(reason);
+            if (reason.response.data.error) setError(reason.response.data.error);
         });
         
         await getPendingTrivia();
@@ -73,6 +83,7 @@ const Home = () => {
     useEffect(() => {
         getPendingTrivia();
         setSynchronized(true);
+        // getTriviaQuestionByCategory(9);
     }, [getPendingTrivia, synchronized]);
 
     const updateTriviaQuestionApproval = async (trivia, approved) => {
@@ -86,23 +97,20 @@ const Home = () => {
             await getPendingTrivia();
         })
         .catch(reason => {
-            setError(reason.message);
-            console.log(reason.message);
+            console.log(reason);
+            if (reason.response.data.error) setError(reason.response.data.error);
         });
     }
 
-    // if (!(user && user._id)) return <Redirect to='/signIn' />
     return (
         <div className='container'>
             <div className='homeHeaders'>
                 <a href='/editAccount'>Edit Your Account</a>
-                {(user && user._id) 
-                ? (
+                { (user && user._id) ?
                     <a href='/logOut'>Log Out</a>
-                )
-                : (
+                :
                     <a href='/signIn'>Sign In</a>
-                )}
+                }
             </div>
             
             <div className='randomTriviaContainer'>
@@ -139,8 +147,6 @@ const Home = () => {
                     <button type='submit'>Get Question</button>
                 </form>
 
-                {/* TODO: Have a 50/50 roll of either pulling the question from the api or the database if the db is not empty
-                    Thinking of doing only True/False questions */}
                 <h3>Answer Question</h3>
                 { question ? <>
                     <p className='triviaQuestion'>{question.question}</p>
@@ -148,24 +154,23 @@ const Home = () => {
                     <button type='button' name='false' onClick={checkAnswer}>False</button>
                     <br />
                     
-                    { info ? <>
-                        <span className='infoMessage'>{info}</span>
+                    { triviaInfo ? <>
+                        <span className='infoMessage'>{triviaInfo}</span>
                         <br />
                     </> : null }
                 </> : <>
-                    { info ? <>
-                        <span className='infoMessage'>{info}</span>
+                    { triviaInfo ? <>
+                        <span className='infoMessage'>{triviaInfo}</span>
                         <br />
                     </> : <>
-                        <span className='infoMessage'>Select a category and press 'Get Question'.</span>
+                        <span className='infoMessage'>Loading...</span>
                         <br />
                     </> }
                 </> }
             </div>
         
-            {(user && user._id) 
-                ? (
-                    <form className='triviaQuestionForm' onSubmit={submitTriviaQuestion}>
+            {(user && user.token) ?
+                <form className='triviaQuestionForm' onSubmit={submitTriviaQuestion}>
                     <h3>Submit Your Own Question</h3>
                     <label htmlFor='category'>Category</label>
                     <select name='questionCategory' id='category'>
@@ -210,15 +215,15 @@ const Home = () => {
                     <br/>
     
                     <button type='submit'>Submit Question</button>
+
+                    { submitInfo ? <>
+                        <span className='infoMessage'>{submitInfo}</span>
+                        <br />
+                    </> : null }
                 </form>
-                )
-                : (
-                null
-            )}
-
-
+            : null }
             
-            { user.isAdmin ? 
+            {(user && user.token && user.isAdmin) ?
                 <div className='approveTriviaQuestions'>
                     <table>
                         <thead>
@@ -243,6 +248,11 @@ const Home = () => {
                             }) }
                         </tbody>
                     </table>
+
+                    { approvalInfo ? <>
+                        <span className='infoMessage'>{approvalInfo}</span>
+                        <br />
+                    </> : null }
                 </div>
             : null }
 

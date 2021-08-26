@@ -9,6 +9,7 @@ const EditAccount = () => {
     const { api } = useContext(APIContext);
     const { user, setUser } = useContext(UserContext);
 
+    const [accountInfo, setAccountInfo] = useState(null);
     const [error, setError] = useState(null);
 
     const submitEditUserForm = async evt => {
@@ -29,10 +30,13 @@ const EditAccount = () => {
                 password: evt.target.password.value,
             })
             .then(res => {
+                console.log(res);
                 setUser(res.data);
+                setAccountInfo(res.message);
             })
             .catch(reason => {
-                setError(reason.response.data.error);
+                console.log(reason);
+                if (reason.response.data.error) setError(reason.response.data.error);
             })
         } else setError('Passwords must match');
     }
@@ -120,7 +124,7 @@ const EditAccount = () => {
                 <label htmlFor='zipCode'>Zip Code</label>
                 <input type='number' id='zipCode' defaultValue={user.zipCode} required/>
 
-                <label htmlFor='password'>Password</label>
+                <label htmlFor='password'>New Password</label>
                 <input type='password' id='password' required/>
 
                 <label htmlFor='confirmPassword'>Confirm Password</label>
@@ -128,6 +132,11 @@ const EditAccount = () => {
 
                 <button type='submit'>Save User</button>
             </form>
+
+            { accountInfo ? <>
+                <span className='infoMessage'>{accountInfo}</span>
+                <br />
+            </> : null }
 
             { error ? <>
                 <span className='errorMessage'>{error}</span>

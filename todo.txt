@@ -1,21 +1,33 @@
 ## HOME ##
 Answer Trivia Questions Form
-- Visitors can request and answer trivia questions
-- Trivia Info: "Correct"/"Incorrect"/"Select Category" (Clear info on timer? QOL)
+- Trivia Info: "Correct"/"Incorrect"/"Select Category/Loading..." (Clear info on timer? QOL)
+	- submitCategoryForm()
+	- checkAnswer()
+	- getTriviaQuestionByCategory()
 
 Submit Trivia Questions Form
-- Users can submit trivia questions for approval
 - Submit Info: "Question Submitted"/"Bad Question" (Clear info on timer? QOL)
+	- submitTriviaQuestion()
 - Clear form on submit (Clear formdata if 200, keep if >=400? QOL)
-- TODO: Skip approval? (Ensure questions are approved on fetch)
 
 Handle Trivia Submissions Table-Form
-- Admins can approve or reject submitted trivia questions
+- Approval Info: "Apprived/Rejected Question"
+	- getPendingTrivia()
+	- updateTriviaQuestionApproval()
 - Store date/time of submission and display 'hours since' in table
 
 ## EDIT ##
 Update User Info Form
 - User Info: "Account Updated"/"Field Invalid"
+
+## SIGN UP ##
+- Add Home button to nav
+- Redirect to home on success
+
+## SIGN IN ##
+- Add Home button to nav
+
+
 
 
 
