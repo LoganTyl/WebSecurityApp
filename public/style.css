@@ -47,7 +47,7 @@ a{
     margin: 50px;
 }
 
-.homeHeaders {
+.homeHeaders, .signInHeaders {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
