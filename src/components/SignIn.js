@@ -33,7 +33,10 @@ const SignIn = () => {
     if (user && user._id) return <Redirect to='/home' />
     return (
         <div className='container'>
-            <a href='/signUp'>Create an Account</a>
+            <div className='signInHeaders'>
+                <a href='/signUp'>Create an Account</a>
+                <a href='/home'>Go to Homepage</a>
+            </div>
 
             <h1>Trivia App Sign In</h1>
             <form className='signInFields' onSubmit={submitSignInForm}>
