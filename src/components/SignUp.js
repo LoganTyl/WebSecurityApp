@@ -25,7 +25,7 @@ const SignUp = () => {
                 password: evt.target.password.value
             })
             .then(res => {
-                if (res.data._id) window.location.href = '/signIn';
+                if (res.data._id) window.location.href = '/home';
             })
             .catch(reason => {
                 console.log(reason.response);
