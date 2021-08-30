@@ -232,6 +232,7 @@ const Home = () => {
                                 <th>Correct Answer</th>
                                 <th>Approve</th>
                                 <th>Reject</th>
+                                <th>Time Since</th>
                                 <th><button onClick={() => getPendingTrivia()}>Refresh</button></th>
                             </tr>
                         </thead>
@@ -243,6 +244,8 @@ const Home = () => {
                                         <td className='pendingTriviaAnswer'>{trivia.answer.toString()}</td>
                                         <td className='pendingTriviaApprove'><button onClick={() => updateTriviaQuestionApproval(trivia, true)}>Approve</button></td>
                                         <td className='pendingTriviaReject'><button onClick={() => updateTriviaQuestionApproval(trivia, false)}>Reject</button></td>
+                                        {/* <td className='pendingTriviaTimeSince'>{trivia.createdAt}</td> */}
+                                        <td className='pendingTriviaTimeSince'>{ (Math.abs(new Date.getTime() - trivia.createdAt)) / 36e5 }</td>
                                     </tr>
                                 );
                             }) }
