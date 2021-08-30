@@ -5,7 +5,6 @@ import APIContext from '../context/APIContext';
 import UserContext from '../context/UserContext';
 
 const Home = () => {
-    // I treat question as singular and trivia as plural (questions)
     const [question, setQuestion] = useState(null);
     const [pendingTrivia, setPendingTrivia] = useState([]);
     const [synchronized, setSynchronized] = useState(false);
@@ -17,50 +16,50 @@ const Home = () => {
     const [submitInfo, setSubmitInfo] = useState(null);
     const [approvalInfo, setApprovalInfo] = useState(null);
     const [error, setError] = useState(null);
-    
-    const getTriviaQuestionByCategory = async category => {
-        let trivia = [];
-        await Axios.get(`${api}/question/${category}`)
-        .then(res => {
-            if(res.data) trivia = res.data;
-        })
-        .catch(reason => {
-            console.log(reason);
-            if (reason.response.data.error) setError(reason.response.data.error);
-        });
 
-        if (trivia.length) setQuestion(trivia[Math.floor(Math.random() * trivia.length)]);
-        else setTriviaInfo('There are no questions in this category. You can add one below.');
-    }
-
+    // ## ANSWER FORM ##
     const submitCategoryForm = async evt => {
         evt.preventDefault();
         setTriviaInfo(null);
+        setError(null);
+
         await getTriviaQuestionByCategory(evt.target.category.value);
     }
 
     const checkAnswer = async evt => {
+        evt.preventDefault();
         setTriviaInfo(null);
+        setError(null);
 
         if (question.answer.toString() === evt.target.name) setTriviaInfo('Correct!');
         else setTriviaInfo('Incorrect. Please, try again.');
     }
-
-    const getPendingTrivia = useCallback(async () => {
+    
+    const getTriviaQuestionByCategory = useCallback(async category => {
+        setTriviaInfo(null);
         setError(null);
-        await Axios.get(`${api}/question/pending`)
+
+        let trivia = [];
+        await Axios.get(`${api}/question/${category}`)
         .then(res => {
-            if (res.data) setPendingTrivia(res.data);
+            if(res?.data?.data) trivia = res.data.data;
         })
         .catch(reason => {
             console.log(reason);
-            if (reason.response.data.error) setError(reason.response.data.error);
+            if (reason?.response?.data?.error) setError(reason.response.data.error);
+            else setError(reason.message);
         });
+
+        if (trivia.length) setQuestion(trivia[Math.floor(Math.random() * trivia.length)]);
+        else setTriviaInfo('There are no questions in this category. You can add one below.');
     }, [api]);
 
+    // ## SUBMIT FORM ##
     const submitTriviaQuestion = async evt => {
         evt.preventDefault();
-
+        setSubmitInfo(null);
+        setError(null);
+        
         await Axios.post(`${api}/question/create`, {
             email: user.email,
             token: user.token,
@@ -69,38 +68,58 @@ const Home = () => {
             answer: evt.target.answer.value
         })
         .then(res => {
-            alert(res.message) // TODO use info
-            setError(null);
+            if (res?.data?.message) setSubmitInfo(res.data.message);
+            evt.target.category.value = 9;
+            evt.target.question.value = '';
+            evt.target.answer.forEach(radioBtn => { if (radioBtn?.checked) radioBtn.checked = false });
+            console.log(evt.target.answer);
         })
         .catch(reason => {
             console.log(reason);
-            if (reason.response.data.error) setError(reason.response.data.error);
+            if (reason?.response?.data?.error) setError(reason.response.data.error);
+            else setError(reason.message);
         });
         
         await getPendingTrivia();
     }
 
-    useEffect(() => {
-        getPendingTrivia();
-        setSynchronized(true);
-        // getTriviaQuestionByCategory(9);
-    }, [getPendingTrivia, synchronized]);
+    // ## APPROVAL FORM ##
+    const getPendingTrivia = useCallback(async () => {
+        await Axios.get(`${api}/question/pending`)
+        .then(res => {
+            if (res?.data?.data) setPendingTrivia(res.data.data);
+        })
+        .catch(reason => {
+            console.log(reason);
+            if (reason?.response?.data?.error) setError(reason.response.data.error);
+            else setError(reason.message);
+        });
+    }, [api]);
 
     const updateTriviaQuestionApproval = async (trivia, approved) => {
-        console.log(`${approved? 'Accept' : 'Reject'} Trivia Question '${trivia.question}' (${trivia.answer})`);
+        setApprovalInfo(null);
+        setError(null);
         
         await Axios.put(`${api}/question/${approved? 'approve' : 'reject'}/${trivia._id}`, {
             email: user.email,
             token: user.token
         })
-        .then(async () => {
+        .then(async res => {
+            if (res?.data?.message) await setApprovalInfo(res.data.message);
             await getPendingTrivia();
         })
         .catch(reason => {
             console.log(reason);
-            if (reason.response.data.error) setError(reason.response.data.error);
+            if (reason?.response?.data?.error) setError(reason.response.data.error);
+            else setError(reason.message);
         });
     }
+
+    useEffect(() => {
+        getPendingTrivia();
+        setSynchronized(true);
+        getTriviaQuestionByCategory(9);
+    }, [getPendingTrivia, synchronized, getTriviaQuestionByCategory]);
 
     return (
         <div className='container'>
@@ -215,6 +234,7 @@ const Home = () => {
                     <br/>
     
                     <button type='submit'>Submit Question</button>
+                    <br/>
 
                     { submitInfo ? <>
                         <span className='infoMessage'>{submitInfo}</span>
@@ -251,6 +271,7 @@ const Home = () => {
                             }) }
                         </tbody>
                     </table>
+                    <br/>
 
                     { approvalInfo ? <>
                         <span className='infoMessage'>{approvalInfo}</span>

@@ -25,19 +25,22 @@ const SignUp = () => {
                 password: evt.target.password.value
             })
             .then(res => {
-                if (res.data._id) window.location.href = '/home';
+                if (res?.data?.data?._id) window.location.href = '/signIn';
             })
             .catch(reason => {
                 console.log(reason.response);
                 if (reason?.response?.data?.error) setError(reason.response.data.error);
-                else setError('An unknown error occured.');
+                else setError(reason.message);
             });
         } else setError('Passwords must match');
     }
 
     return (
         <div className='container'>
-            <a href='signIn'>Back</a>
+            <div className='signInHeaders'>
+                <a href='/signIn'>Sign In</a>
+                <a href='/home'>Go to Homepage</a>
+            </div>
             
             <h1>Sign Up</h1>
             <form className='signUpFields' onSubmit={submitSignUpForm}>

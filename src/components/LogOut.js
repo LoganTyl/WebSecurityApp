@@ -7,7 +7,7 @@ const LogOut = () => {
     const { user, setUser } = useContext(UserContext);
     
     useEffect(() => {
-        if (user && user._id) setUser(null);
+        if (user) setUser(null);
     });
 
     return <Redirect to='/signIn' />

@@ -14,6 +14,7 @@ const EditAccount = () => {
 
     const submitEditUserForm = async evt => {
         evt.preventDefault();
+        setAccountInfo(null);
         setError(null);
 
         if (evt.target.password.value === evt.target.confirmPassword.value) {
@@ -31,12 +32,15 @@ const EditAccount = () => {
             })
             .then(res => {
                 console.log(res);
-                setUser(res.data);
-                setAccountInfo(res.message);
+                if (res?.data?.data && res?.data?.message) {
+                    setUser(res.data.data);
+                    setAccountInfo(res.data.message);
+                }
             })
             .catch(reason => {
                 console.log(reason);
-                if (reason.response.data.error) setError(reason.response.data.error);
+                if (reason?.response?.data?.error) setError(reason.response.data.error);
+                else setError(reason.message);
             })
         } else setError('Passwords must match');
     }
@@ -44,7 +48,7 @@ const EditAccount = () => {
     if (!(user && user._id)) return <Redirect to='/signIn' />
     return (
         <div className='container'>
-            <a href='home'>Back</a>
+            <a href='home'>Home</a>
             
             <h1>Update Account</h1>
             <h3>Updating Account for {user.email}</h3>
