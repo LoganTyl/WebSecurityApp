@@ -85,7 +85,10 @@ const Home = () => {
 
     // ## APPROVAL FORM ##
     const getPendingTrivia = useCallback(async () => {
-        await Axios.get(`${api}/question/pending`)
+        await Axios.post(`${api}/question/pending`, {
+            email: user.email,
+            token: user.token
+        })
         .then(res => {
             if (res?.data?.data) setPendingTrivia(res.data.data);
         })
