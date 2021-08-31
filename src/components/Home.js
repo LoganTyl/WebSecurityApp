@@ -80,7 +80,7 @@ const Home = () => {
             else setError(reason.message);
         });
         
-        await getPendingTrivia();
+        if (user && user.token && user.isAdmin) await getPendingTrivia();
     }
 
     // ## APPROVAL FORM ##
@@ -116,10 +116,10 @@ const Home = () => {
     }
 
     useEffect(() => {
-        getPendingTrivia();
+        if (user && user.token && user.isAdmin) getPendingTrivia();
         setSynchronized(true);
         getTriviaQuestionByCategory(9);
-    }, [getPendingTrivia, synchronized, getTriviaQuestionByCategory]);
+    }, [user, getPendingTrivia, synchronized, getTriviaQuestionByCategory]);
 
     return (
         <div className='container'>
@@ -243,7 +243,7 @@ const Home = () => {
                 </form>
             : null }
             
-            {(user && user.token && user.isAdmin) ?
+            {(user && user.token && user.isAdmin && pendingTrivia.length) ?
                 <div className='approveTriviaQuestions'>
                     <table>
                         <thead>
