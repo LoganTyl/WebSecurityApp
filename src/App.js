@@ -11,8 +11,8 @@ import APIContext from './context/APIContext';
 import UserContext from './context/UserContext';
 
 const App = () => {
-    const [api, setApi] = useState('http://localhost:3000/api');
-    // const [api, setApi] = useState('http://10.0.115.234:3000/api');
+    // const [api, setApi] = useState('http://localhost:3000/api');
+    const [api, setApi] = useState('http://10.0.115.234:3000/api');
     const [user, setUserState] = useState(JSON.parse(sessionStorage.getItem('user')));
 
     const setUser = value => {

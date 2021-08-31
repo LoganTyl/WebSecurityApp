@@ -248,24 +248,25 @@ const Home = () => {
                     <table>
                         <thead>
                             <tr>
+                                <th>Hours Since</th>
                                 <th>Question</th>
                                 <th>Correct Answer</th>
                                 <th>Approve</th>
                                 <th>Reject</th>
-                                <th>Time Since</th>
                                 <th><button onClick={() => getPendingTrivia()}>Refresh</button></th>
                             </tr>
                         </thead>
                         <tbody>
                             { pendingTrivia.map(trivia => {
+                                let hoursSince = Math.round(Math.abs(new Date().getTime() - trivia.createdAt) / 36e5);
                                 return (
                                     <tr className='pendingTrivia' key={trivia.question}>
+                                        <td className={`pendingTriviaTimeSince ${hoursSince >= 20? 'errorMessage' : ''}`}>{hoursSince}</td>
                                         <td className='pendingTriviaQuestion'>{trivia.question}</td>
                                         <td className='pendingTriviaAnswer'>{trivia.answer.toString()}</td>
                                         <td className='pendingTriviaApprove'><button onClick={() => updateTriviaQuestionApproval(trivia, true)}>Approve</button></td>
                                         <td className='pendingTriviaReject'><button onClick={() => updateTriviaQuestionApproval(trivia, false)}>Reject</button></td>
                                         {/* <td className='pendingTriviaTimeSince'>{trivia.createdAt}</td> */}
-                                        <td className='pendingTriviaTimeSince'>{ (Math.abs(new Date.getTime() - trivia.createdAt)) / 36e5 }</td>
                                     </tr>
                                 );
                             }) }
