@@ -106,3 +106,7 @@ a{
 button[type='submit'] {
     margin-bottom: 20px;
 }
+
+.homeHeaders p {
+    margin: 0;
+}

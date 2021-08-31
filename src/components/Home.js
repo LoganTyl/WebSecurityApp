@@ -97,7 +97,7 @@ const Home = () => {
             if (reason?.response?.data?.error) setError(reason.response.data.error);
             else setError(reason.message);
         });
-    }, [api]);
+    }, [api, user]);
 
     const updateTriviaQuestionApproval = async (trivia, approved) => {
         setApprovalInfo(null);
@@ -128,9 +128,10 @@ const Home = () => {
         <div className='container'>
             <div className='homeHeaders'>
                 <a href='/editAccount'>Edit Your Account</a>
-                { (user && user._id) ?
+                { (user && user.token) ? <>
+                    <p>{`Logged in as ${user.firstName}${user.isAdmin? ' (Admin)' : ''}`}</p>
                     <a href='/logOut'>Log Out</a>
-                :
+                </> :
                     <a href='/signIn'>Sign In</a>
                 }
             </div>
